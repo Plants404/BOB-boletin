@@ -4,16 +4,26 @@
 <head>
 
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Todas las Novedades | BOB</title>
+    <title>Historial de Novedades | BOB</title>
 
-    <link rel="stylesheet" href="style.css">
-
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- Flatpickr -->
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -25,17 +35,38 @@
 
         <a href="index.html">
 
-            <img src="./image/bob lgo.png" class="logo" alt="Logo BOB">
+            <img
+                src="image/bob lgo.png"
+                class="logo"
+                alt="Logo BOB">
 
         </a>
 
         <nav>
 
-            <a href="index.html">Inicio</a>
+            <a href="index.html">
 
-            <a href="novedades.html">Todas las novedades</a>
+                <i class="fa-solid fa-house"></i>
 
-            <a href="index.html#publicar">Publicar</a>
+                Inicio
+
+            </a>
+
+            <a href="novedades.html">
+
+                <i class="fa-solid fa-book-open"></i>
+
+                Historial
+
+            </a>
+
+            <a href="index.html#publicar">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Publicar
+
+            </a>
 
         </nav>
 
@@ -49,12 +80,15 @@
 
     <div class="hero-text">
 
-        <h1>Historial de Novedades</h1>
+        <h1>
+
+            Historial de publicaciones
+
+        </h1>
 
         <p>
 
-            Aquí encontrarás todas las publicaciones oficiales del Board,
-            ordenadas desde la más reciente hasta la más antigua.
+            Consulte todas las novedades oficiales publicadas por el Board.
 
         </p>
 
@@ -66,28 +100,81 @@
 
     <div class="titulo-seccion">
 
-        <h2>Todas las novedades</h2>
+        <h2>
+
+            <i class="fa-solid fa-newspaper"></i>
+
+            Todas las publicaciones
+
+        </h2>
 
         <a href="index.html" class="btn-secundario">
 
-            ← Volver al inicio
+            ← Volver
 
         </a>
 
     </div>
 
-    <div id="loading">
+    <!-- Barra de herramientas -->
 
-        Cargando novedades...
+    <div class="barra-herramientas">
+
+        <div class="buscador">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+                type="text"
+                id="buscar"
+                placeholder="Buscar por título o contenido...">
+
+        </div>
+
+        <div class="filtros">
+
+            <select id="ordenar">
+
+                <option value="desc">
+                    Más recientes
+                </option>
+
+                <option value="asc">
+                    Más antiguas
+                </option>
+
+            </select>
+
+            <input
+                type="text"
+                id="filtroFecha"
+                placeholder="Filtrar por fecha">
+
+        </div>
 
     </div>
 
-    <div id="contenedorNoticias">
+    <!-- Loader -->
 
-        <!--
-        Aquí JavaScript agregará automáticamente
-        todas las noticias obtenidas desde Google Sheets.
-        -->
+    <div id="loading">
+
+        <i class="fa-solid fa-spinner fa-spin"></i>
+
+        Cargando publicaciones...
+
+    </div>
+
+    <!-- Contador -->
+
+    <div id="contadorNoticias" class="contador">
+
+        0 publicaciones
+
+    </div>
+
+    <!-- Contenedor -->
+
+    <div id="contenedorNoticias">
 
     </div>
 
@@ -105,7 +192,20 @@
 
 </footer>
 
-<script src="script.js"></script>
+<!-- Librerías -->
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- JS -->
+
+<script src="calendario.js"></script>
+<script src="ui.js"></script>
+<script src="api.js"></script>
+<script src="app.js"></script>
 
 </body>
 

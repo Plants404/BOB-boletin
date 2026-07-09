@@ -8,11 +8,25 @@
 
     <title>BOB | Boletín Oficial del Board</title>
 
-    <link rel="stylesheet" href="style.css">
-
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- Quill -->
+    <link href="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.snow.css" rel="stylesheet">
+
+    <!-- Flatpickr -->
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -24,19 +38,33 @@
 
         <a href="#inicio">
 
-            <img src="./image/bob lgo.png" alt="Logo BOB" class="logo">
+            <img src="image/bob lgo.png"
+                 class="logo"
+                 alt="Logo BOB">
 
         </a>
 
         <nav>
 
-            <a href="#inicio">Inicio</a>
+            <a href="#inicio">
+                <i class="fa-solid fa-house"></i>
+                Inicio
+            </a>
 
-            <a href="#novedades">Novedades</a>
+            <a href="#novedades">
+                <i class="fa-solid fa-newspaper"></i>
+                Novedades
+            </a>
 
-            <a href="#publicar">Publicar</a>
+            <a href="#publicar">
+                <i class="fa-solid fa-pen"></i>
+                Publicar
+            </a>
 
-            <a href="novedades.html">Ver todas</a>
+            <a href="novedades.html">
+                <i class="fa-solid fa-book-open"></i>
+                Historial
+            </a>
 
         </nav>
 
@@ -44,8 +72,9 @@
 
 </header>
 
-
 <main>
+
+<!-- HERO -->
 
 <section class="hero" id="inicio">
 
@@ -55,14 +84,16 @@
 
         <p>
 
-            El espacio oficial para comunicar novedades,
-            anuncios, decisiones estratégicas y eventos del Board.
+            Plataforma oficial para comunicar anuncios,
+            resoluciones, eventos y novedades del Board.
 
         </p>
 
         <a href="#publicar" class="btn">
 
-            Publicar una novedad
+            <i class="fa-solid fa-plus"></i>
+
+            Nueva publicación
 
         </a>
 
@@ -70,17 +101,23 @@
 
 </section>
 
-
+<!-- NOVEDADES -->
 
 <section class="novedades" id="novedades">
 
     <div class="titulo-seccion">
 
-        <h2>Últimas novedades</h2>
+        <h2>
+
+            <i class="fa-solid fa-bullhorn"></i>
+
+            Últimas novedades
+
+        </h2>
 
         <a href="novedades.html" class="btn-secundario">
 
-            Ver historial completo
+            Ver historial →
 
         </a>
 
@@ -88,46 +125,56 @@
 
     <div id="loading">
 
-        Cargando novedades...
+        <i class="fa-solid fa-spinner fa-spin"></i>
+
+        Cargando publicaciones...
 
     </div>
 
     <div id="contenedorNoticias">
 
-        <!--
-            Aquí JavaScript cargará automáticamente
-            las últimas noticias desde Google Sheets.
-        -->
+        <!-- JavaScript -->
 
     </div>
 
 </section>
 
-
+<!-- FORMULARIO -->
 
 <section class="formulario" id="publicar">
 
-    <h2>Publicar una novedad</h2>
+    <h2>
+
+        <i class="fa-solid fa-pen-to-square"></i>
+
+        Nueva publicación
+
+    </h2>
 
     <form id="newsForm">
+
+        <label>Título</label>
 
         <input
             type="text"
             id="titulo"
-            placeholder="Título de la novedad"
+            placeholder="Ingrese el título"
             required>
 
-        <textarea
-            id="descripcion"
-            placeholder="Escriba aquí la novedad..."
-            required></textarea>
+        <label>Fecha</label>
 
         <input
-            type="date"
+            type="text"
             id="fecha"
             required>
 
+        <label>Contenido</label>
+
+        <div id="editor"></div>
+
         <button type="submit">
+
+            <i class="fa-solid fa-paper-plane"></i>
 
             Publicar
 
@@ -139,8 +186,6 @@
 
 </main>
 
-
-
 <footer>
 
     <p>
@@ -151,8 +196,25 @@
 
 </footer>
 
-<script src="script.js"></script>
+<!-- LIBRERÍAS -->
 
+<script src="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- JS -->
+
+<script src="editor.js"></script>
+
+<script src="calendario.js"></script>
+
+<script src="ui.js"></script>
+<script src="api.js"></script>
+<script src="app.js"></script>
 </body>
 
-</html>
+</html>>

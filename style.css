@@ -1,49 +1,128 @@
-/* ==========================
+/* =====================================================
+   BOB v3
+   STYLE.CSS
+   PARTE 1 - VARIABLES, RESET, HEADER, HERO
+   PARTE 2 - BOTONES, BUSCADOR Y TARJETAS
+===================================================== */
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+:root{
+
+    --primary:#163E63;
+    --primary-dark:#102f4d;
+
+    --secondary:#71B52B;
+    --secondary-dark:#5d9622;
+
+    --background:#f4f7f9;
+    --surface:#ffffff;
+
+    --text:#2d3436;
+    --text-light:#7b8a97;
+
+    --border:#dfe6e9;
+
+    --danger:#e74c3c;
+    --danger-dark:#c0392b;
+
+    --success:#2ecc71;
+
+    --radius:14px;
+
+    --shadow:
+        0 8px 25px rgba(0,0,0,.08);
+
+    --transition:.25s ease;
+
+}
+
+
+/* =====================================================
    RESET
-========================== */
+===================================================== */
 
 *{
+
     margin:0;
     padding:0;
     box-sizing:border-box;
+
 }
 
 html{
+
     scroll-behavior:smooth;
+
 }
 
 body{
 
     font-family:'Poppins',sans-serif;
-    background:#f4f7f9;
-    color:#333;
+
+    background:var(--background);
+
+    color:var(--text);
+
     line-height:1.6;
 
 }
 
-/* ==========================
-   HEADER
-========================== */
+img{
 
-header{
-
-    background:#163E63;
-
-    position:sticky;
-    top:0;
-    z-index:1000;
-
-    box-shadow:0 3px 10px rgba(0,0,0,.15);
+    display:block;
+    max-width:100%;
 
 }
 
+a{
+
+    color:inherit;
+    text-decoration:none;
+
+}
+
+button{
+
+    font-family:inherit;
+
+}
+
+
+/* =====================================================
+   CONTENEDOR
+===================================================== */
+
 .container{
 
-    max-width:1200px;
-
+    width:min(1200px,90%);
     margin:auto;
 
-    padding:15px 30px;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+header{
+
+    background:var(--primary);
+
+    position:sticky;
+
+    top:0;
+
+    z-index:999;
+
+    box-shadow:var(--shadow);
+
+}
+
+header .container{
 
     display:flex;
 
@@ -51,23 +130,28 @@ header{
 
     align-items:center;
 
+    padding:18px 0;
+
 }
 
 .logo{
 
-    height:70px;
+    width:80px;
 
 }
 
-/* ==========================
+
+/* =====================================================
    NAV
-========================== */
+===================================================== */
 
 nav{
 
     display:flex;
 
-    gap:30px;
+    align-items:center;
+
+    gap:28px;
 
 }
 
@@ -75,47 +159,68 @@ nav a{
 
     color:white;
 
-    text-decoration:none;
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
 
     font-weight:500;
 
-    transition:.3s;
+    transition:var(--transition);
 
 }
 
 nav a:hover{
 
-    color:#71B52B;
+    color:var(--secondary);
 
 }
 
-/* ==========================
+
+/* =====================================================
    HERO
-========================== */
+===================================================== */
 
 .hero{
 
-    min-height:70vh;
+    min-height:520px;
 
     display:flex;
 
-    justify-content:center;
-
     align-items:center;
+
+    justify-content:center;
 
     text-align:center;
 
+    padding:80px 20px;
+
+    background:
+
+    linear-gradient(
+
+        135deg,
+
+        var(--primary),
+
+        #1b5d8f
+
+    );
+
     color:white;
 
-    padding:40px;
+}
 
-    background:linear-gradient(135deg,#163E63,#0f6d84);
+.hero-small{
+
+    min-height:300px;
 
 }
 
 .hero-text{
 
-    max-width:850px;
+    max-width:760px;
 
 }
 
@@ -123,7 +228,9 @@ nav a:hover{
 
     font-size:56px;
 
-    margin-bottom:20px;
+    margin-bottom:25px;
+
+    font-weight:700;
 
 }
 
@@ -131,71 +238,18 @@ nav a:hover{
 
     font-size:20px;
 
-}
-
-/* ==========================
-   BOTONES
-========================== */
-
-.btn,
-button{
-
-    display:inline-block;
-
-    margin-top:30px;
-
-    padding:15px 35px;
-
-    background:#71B52B;
-
-    color:white;
-
-    border:none;
-
-    border-radius:8px;
-
-    text-decoration:none;
-
-    cursor:pointer;
-
-    transition:.3s;
-
-    font-size:16px;
-
-    font-weight:600;
+    opacity:.95;
 
 }
 
-.btn:hover,
-button:hover{
 
-    background:#5d991f;
+/* =====================================================
+   SECCIONES
+===================================================== */
 
-    transform:translateY(-2px);
+section{
 
-}
-
-.btn-secundario{
-
-    color:#163E63;
-
-    text-decoration:none;
-
-    font-weight:600;
-
-}
-
-/* ==========================
-   NOVEDADES
-========================== */
-
-.novedades{
-
-    max-width:1200px;
-
-    margin:auto;
-
-    padding:70px 20px;
+    padding:70px 0;
 
 }
 
@@ -211,101 +265,394 @@ button:hover{
 
 }
 
-.novedades h2{
+.titulo-seccion h2{
 
-    color:#163E63;
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    color:var(--primary);
 
 }
 
-/* ==========================
-   LOADING
-========================== */
+
+/* =====================================================
+   BOTONES
+===================================================== */
+
+.btn,
+
+button{
+
+    border:none;
+
+    cursor:pointer;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+    padding:14px 28px;
+
+    border-radius:12px;
+
+    background:var(--secondary);
+
+    color:white;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    transition:var(--transition);
+
+}
+
+.btn:hover,
+
+button:hover{
+
+    background:var(--secondary-dark);
+
+    transform:translateY(-2px);
+
+}
+
+.btn-secundario{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    background:var(--primary);
+
+    color:white;
+
+    padding:12px 22px;
+
+    border-radius:12px;
+
+    transition:var(--transition);
+
+}
+
+.btn-secundario:hover{
+
+    background:var(--primary-dark);
+
+}
+
+
+/* =====================================================
+   LOADER
+===================================================== */
 
 #loading{
 
     text-align:center;
 
-    color:#666;
+    padding:25px;
 
-    margin-bottom:20px;
+    color:var(--text-light);
+
+    font-size:18px;
 
 }
 
-/* ==========================
-   TARJETAS
-========================== */
 
-.card{
+/* =====================================================
+   BARRA DE HERRAMIENTAS
+===================================================== */
+
+.barra-herramientas{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:20px;
+
+    flex-wrap:wrap;
+
+    margin-bottom:35px;
+
+}
+
+.buscador{
+
+    flex:1;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
 
     background:white;
 
-    padding:25px;
+    border-radius:14px;
 
-    margin-bottom:25px;
+    padding:15px 18px;
 
-    border-left:8px solid #71B52B;
+    box-shadow:var(--shadow);
+
+}
+
+.buscador input{
+
+    width:100%;
+
+    border:none;
+
+    outline:none;
+
+    background:none;
+
+    font-size:16px;
+
+}
+
+.buscador i{
+
+    color:var(--text-light);
+
+}
+
+.filtros{
+
+    display:flex;
+
+    gap:15px;
+
+}
+
+.filtros input,
+
+.filtros select{
+
+    padding:14px 18px;
 
     border-radius:12px;
 
-    box-shadow:0 8px 20px rgba(0,0,0,.08);
-
-    transition:.3s;
-
-}
-
-.card:hover{
-
-    transform:translateY(-5px);
-
-}
-
-.card h3{
-
-    color:#163E63;
-
-    margin-bottom:10px;
-
-}
-
-.card p{
-
-    margin-bottom:15px;
-
-}
-
-.card small{
-
-    color:#777;
-
-}
-
-/* ==========================
-   FORMULARIO
-========================== */
-
-.formulario{
+    border:1px solid var(--border);
 
     background:white;
 
-    padding:70px 20px;
+    font-size:15px;
+
+    font-family:inherit;
+
+}
+
+
+/* =====================================================
+   CONTADOR
+===================================================== */
+
+.contador{
+
+    margin-bottom:30px;
+
+    font-weight:600;
+
+    color:var(--primary);
+
+}
+
+
+/* =====================================================
+   GRID DE NOTICIAS
+===================================================== */
+
+#contenedorNoticias{
+
+    display:grid;
+
+    grid-template-columns:
+
+    repeat(auto-fill,minmax(340px,1fr));
+
+    gap:30px;
+
+}
+
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.card-noticia{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    box-shadow:var(--shadow);
+
+    transition:var(--transition);
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.card-noticia:hover{
+
+    transform:translateY(-6px);
+
+}
+
+.card-noticia::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:6px;
+
+    background:var(--secondary);
+
+}
+
+.card-noticia h3{
+
+    color:var(--primary);
+
+    margin-bottom:18px;
+
+    font-size:22px;
+
+}
+
+.contenido-noticia{
+
+    margin-bottom:20px;
+
+    line-height:1.8;
+
+}
+
+.card-noticia small{
+
+    color:var(--text-light);
+
+}
+
+
+/* =====================================================
+   BOTONES DE ACCIONES
+===================================================== */
+
+.card-actions{
+
+    position:absolute;
+
+    top:18px;
+
+    right:18px;
+
+    display:flex;
+
+    gap:10px;
+
+}
+
+.action-btn{
+
+    width:40px;
+
+    height:40px;
+
+    border:none;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:white;
+
+    transition:var(--transition);
+
+}
+
+.edit{
+
+    background:#3498db;
+
+}
+
+.edit:hover{
+
+    background:#2980b9;
+
+}
+
+.delete{
+
+    background:var(--danger);
+
+}
+
+.delete:hover{
+
+    background:var(--danger-dark);
+
+}
+/* =====================================================
+   FORMULARIO
+===================================================== */
+
+.formulario{
+
+    width:min(900px,90%);
+    margin:80px auto;
+
+    background:var(--surface);
+
+    border-radius:20px;
+
+    padding:45px;
+
+    box-shadow:var(--shadow);
 
 }
 
 .formulario h2{
 
+    color:var(--primary);
+
+    margin-bottom:35px;
+
     text-align:center;
-
-    color:#163E63;
-
-    margin-bottom:40px;
 
 }
 
 form{
-
-    max-width:700px;
-
-    margin:auto;
 
     display:flex;
 
@@ -315,65 +662,326 @@ form{
 
 }
 
-input,
-textarea{
+form label{
+
+    font-weight:600;
+
+    color:var(--primary);
+
+}
+
+form input{
 
     width:100%;
 
     padding:15px;
 
-    border:1px solid #d4d4d4;
+    border:1px solid var(--border);
 
-    border-radius:8px;
+    border-radius:12px;
 
     font-size:16px;
 
-    font-family:'Poppins',sans-serif;
+    font-family:inherit;
+
+    transition:var(--transition);
 
 }
 
-input:focus,
-textarea:focus{
+form input:focus{
 
     outline:none;
 
-    border-color:#71B52B;
+    border-color:var(--secondary);
 
-    box-shadow:0 0 0 3px rgba(113,181,43,.25);
-
-}
-
-textarea{
-
-    min-height:180px;
-
-    resize:vertical;
+    box-shadow:0 0 0 3px rgba(113,181,43,.2);
 
 }
 
-/* ==========================
+
+/* =====================================================
+   QUILL
+===================================================== */
+
+#editor{
+
+    background:white;
+
+    border-radius:0 0 12px 12px;
+
+}
+
+.ql-toolbar{
+
+    border-radius:12px 12px 0 0;
+
+    border:1px solid var(--border);
+
+    background:#fafafa;
+
+}
+
+.ql-container{
+
+    min-height:320px;
+
+    border:1px solid var(--border);
+
+    border-top:none;
+
+    border-radius:0 0 12px 12px;
+
+    font-family:"Poppins",sans-serif;
+
+    font-size:16px;
+
+}
+
+.ql-editor{
+
+    min-height:280px;
+
+    line-height:1.7;
+
+}
+
+.ql-editor.ql-blank::before{
+
+    color:#999;
+
+    font-style:normal;
+
+}
+
+
+/* =====================================================
+   FLATPICKR
+===================================================== */
+
+.flatpickr-input{
+
+    cursor:pointer;
+
+    background:white;
+
+}
+
+.flatpickr-calendar{
+
+    border:none;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.18);
+
+}
+
+.flatpickr-months{
+
+    background:var(--primary);
+
+}
+
+.flatpickr-current-month{
+
+    color:white;
+
+}
+
+.flatpickr-current-month input.cur-year{
+
+    color:white;
+
+}
+
+.flatpickr-prev-month svg,
+
+.flatpickr-next-month svg{
+
+    fill:white;
+
+}
+
+.flatpickr-weekdays{
+
+    background:#f8f9fa;
+
+}
+
+.flatpickr-weekday{
+
+    color:var(--primary);
+
+    font-weight:600;
+
+}
+
+.flatpickr-day.selected{
+
+    background:var(--secondary);
+
+    border-color:var(--secondary);
+
+}
+
+.flatpickr-day:hover{
+
+    background:#d9efc5;
+
+}
+
+
+/* =====================================================
+   SWEET ALERT
+===================================================== */
+
+.swal2-popup{
+
+    border-radius:18px !important;
+
+    font-family:"Poppins",sans-serif;
+
+}
+
+.swal2-confirm{
+
+    background:var(--secondary)!important;
+
+}
+
+.swal2-cancel{
+
+    background:var(--primary)!important;
+
+}
+
+
+/* =====================================================
    FOOTER
-========================== */
+===================================================== */
 
 footer{
 
-    background:#163E63;
+    margin-top:80px;
+
+    background:var(--primary);
 
     color:white;
 
     text-align:center;
 
-    padding:25px;
+    padding:30px;
 
 }
 
-/* ==========================
+
+/* =====================================================
+   ANIMACIONES
+===================================================== */
+
+@keyframes aparecer{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+.card-noticia{
+
+    animation:aparecer .4s ease;
+
+}
+
+.btn,
+
+.action-btn,
+
+button{
+
+    transition:.25s;
+
+}
+
+.action-btn:hover,
+
+.btn:hover,
+
+button:hover{
+
+    transform:translateY(-3px);
+
+}
+
+
+/* =====================================================
+   SCROLLBAR
+===================================================== */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#ececec;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:var(--primary);
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:var(--secondary);
+
+}
+
+
+/* =====================================================
    RESPONSIVE
-========================== */
+===================================================== */
+
+@media(max-width:992px){
+
+    .hero h1{
+
+        font-size:42px;
+
+    }
+
+    #contenedorNoticias{
+
+        grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+
+    }
+
+}
 
 @media(max-width:768px){
 
-    .container{
+    header .container{
 
         flex-direction:column;
 
@@ -387,13 +995,19 @@ footer{
 
         justify-content:center;
 
-        gap:15px;
+    }
+
+    .hero{
+
+        min-height:420px;
+
+        padding:60px 25px;
 
     }
 
     .hero h1{
 
-        font-size:38px;
+        font-size:34px;
 
     }
 
@@ -410,6 +1024,72 @@ footer{
         gap:20px;
 
         text-align:center;
+
+    }
+
+    .barra-herramientas{
+
+        flex-direction:column;
+
+    }
+
+    .buscador{
+
+        width:100%;
+
+    }
+
+    .filtros{
+
+        width:100%;
+
+        flex-direction:column;
+
+    }
+
+    .filtros input,
+
+    .filtros select{
+
+        width:100%;
+
+    }
+
+    .formulario{
+
+        padding:30px;
+
+    }
+
+}
+
+@media(max-width:480px){
+
+    .hero h1{
+
+        font-size:28px;
+
+    }
+
+    .logo{
+
+        width:65px;
+
+    }
+
+    .card-noticia{
+
+        padding:18px;
+
+    }
+
+    .card-actions{
+
+        position:static;
+
+        justify-content:flex-end;
+
+        margin-bottom:20px;
 
     }
 
