@@ -1,0 +1,416 @@
+/* ==========================
+   RESET
+========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    font-family:'Poppins',sans-serif;
+    background:#f4f7f9;
+    color:#333;
+    line-height:1.6;
+
+}
+
+/* ==========================
+   HEADER
+========================== */
+
+header{
+
+    background:#163E63;
+
+    position:sticky;
+    top:0;
+    z-index:1000;
+
+    box-shadow:0 3px 10px rgba(0,0,0,.15);
+
+}
+
+.container{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:15px 30px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.logo{
+
+    height:70px;
+
+}
+
+/* ==========================
+   NAV
+========================== */
+
+nav{
+
+    display:flex;
+
+    gap:30px;
+
+}
+
+nav a{
+
+    color:white;
+
+    text-decoration:none;
+
+    font-weight:500;
+
+    transition:.3s;
+
+}
+
+nav a:hover{
+
+    color:#71B52B;
+
+}
+
+/* ==========================
+   HERO
+========================== */
+
+.hero{
+
+    min-height:70vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    color:white;
+
+    padding:40px;
+
+    background:linear-gradient(135deg,#163E63,#0f6d84);
+
+}
+
+.hero-text{
+
+    max-width:850px;
+
+}
+
+.hero h1{
+
+    font-size:56px;
+
+    margin-bottom:20px;
+
+}
+
+.hero p{
+
+    font-size:20px;
+
+}
+
+/* ==========================
+   BOTONES
+========================== */
+
+.btn,
+button{
+
+    display:inline-block;
+
+    margin-top:30px;
+
+    padding:15px 35px;
+
+    background:#71B52B;
+
+    color:white;
+
+    border:none;
+
+    border-radius:8px;
+
+    text-decoration:none;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    font-size:16px;
+
+    font-weight:600;
+
+}
+
+.btn:hover,
+button:hover{
+
+    background:#5d991f;
+
+    transform:translateY(-2px);
+
+}
+
+.btn-secundario{
+
+    color:#163E63;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+}
+
+/* ==========================
+   NOVEDADES
+========================== */
+
+.novedades{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:70px 20px;
+
+}
+
+.titulo-seccion{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:35px;
+
+}
+
+.novedades h2{
+
+    color:#163E63;
+
+}
+
+/* ==========================
+   LOADING
+========================== */
+
+#loading{
+
+    text-align:center;
+
+    color:#666;
+
+    margin-bottom:20px;
+
+}
+
+/* ==========================
+   TARJETAS
+========================== */
+
+.card{
+
+    background:white;
+
+    padding:25px;
+
+    margin-bottom:25px;
+
+    border-left:8px solid #71B52B;
+
+    border-radius:12px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+    transition:.3s;
+
+}
+
+.card:hover{
+
+    transform:translateY(-5px);
+
+}
+
+.card h3{
+
+    color:#163E63;
+
+    margin-bottom:10px;
+
+}
+
+.card p{
+
+    margin-bottom:15px;
+
+}
+
+.card small{
+
+    color:#777;
+
+}
+
+/* ==========================
+   FORMULARIO
+========================== */
+
+.formulario{
+
+    background:white;
+
+    padding:70px 20px;
+
+}
+
+.formulario h2{
+
+    text-align:center;
+
+    color:#163E63;
+
+    margin-bottom:40px;
+
+}
+
+form{
+
+    max-width:700px;
+
+    margin:auto;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:20px;
+
+}
+
+input,
+textarea{
+
+    width:100%;
+
+    padding:15px;
+
+    border:1px solid #d4d4d4;
+
+    border-radius:8px;
+
+    font-size:16px;
+
+    font-family:'Poppins',sans-serif;
+
+}
+
+input:focus,
+textarea:focus{
+
+    outline:none;
+
+    border-color:#71B52B;
+
+    box-shadow:0 0 0 3px rgba(113,181,43,.25);
+
+}
+
+textarea{
+
+    min-height:180px;
+
+    resize:vertical;
+
+}
+
+/* ==========================
+   FOOTER
+========================== */
+
+footer{
+
+    background:#163E63;
+
+    color:white;
+
+    text-align:center;
+
+    padding:25px;
+
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media(max-width:768px){
+
+    .container{
+
+        flex-direction:column;
+
+        gap:20px;
+
+    }
+
+    nav{
+
+        flex-wrap:wrap;
+
+        justify-content:center;
+
+        gap:15px;
+
+    }
+
+    .hero h1{
+
+        font-size:38px;
+
+    }
+
+    .hero p{
+
+        font-size:18px;
+
+    }
+
+    .titulo-seccion{
+
+        flex-direction:column;
+
+        gap:20px;
+
+        text-align:center;
+
+    }
+
+}

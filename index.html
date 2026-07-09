@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BOB | Boletín Oficial del Board</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="container">
+
+        <a href="#inicio">
+
+            <img src="./image/bob lgo.png" alt="Logo BOB" class="logo">
+
+        </a>
+
+        <nav>
+
+            <a href="#inicio">Inicio</a>
+
+            <a href="#novedades">Novedades</a>
+
+            <a href="#publicar">Publicar</a>
+
+            <a href="novedades.html">Ver todas</a>
+
+            <a href="novedades.html">Ver todas</a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<main>
+
+<section class="hero" id="inicio">
+
+    <div class="hero-text">
+
+        <h1>Boletín Oficial del Board</h1>
+
+        <p>
+
+            El espacio oficial para comunicar novedades,
+            anuncios, decisiones estratégicas y eventos del Board.
+
+        </p>
+
+        <a href="#publicar" class="btn">
+
+            Publicar una novedad
+
+        </a>
+
+    </div>
+
+</section>
+
+
+
+<section class="novedades" id="novedades">
+
+    <div class="titulo-seccion">
+
+        <h2>Últimas novedades</h2>
+
+        <a href="novedades.html" class="btn-secundario">
+
+            Ver historial completo
+
+        </a>
+
+    </div>
+
+    <div id="loading">
+
+        Cargando novedades...
+
+    </div>
+
+    <div id="contenedorNoticias">
+
+        <!--
+            Aquí JavaScript cargará automáticamente
+            las últimas noticias desde Google Sheets.
+        -->
+
+    </div>
+
+</section>
+
+
+
+<section class="formulario" id="publicar">
+
+    <h2>Publicar una novedad</h2>
+
+    <form id="newsForm">
+
+        <input
+            type="text"
+            id="titulo"
+            placeholder="Título de la novedad"
+            required>
+
+        <textarea
+            id="descripcion"
+            placeholder="Escriba aquí la novedad..."
+            required></textarea>
+
+        <input
+            type="date"
+            id="fecha"
+            required>
+
+        <button type="submit">
+
+            Publicar
+
+        </button>
+
+    </form>
+
+</section>
+
+</main>
+
+
+
+<footer>
+
+    <p>
+
+        © 2026 Boletín Oficial del Board
+
+    </p>
+
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
