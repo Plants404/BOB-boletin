@@ -1,6 +1,7 @@
 /* ==========================================
    APP.JS
    Controlador principal de BOB
+   CORREGIDO: Mejor manejo de errores y validación de ID
    ========================================== */
 
 let noticias = [];
@@ -23,6 +24,7 @@ async function cargarNoticias() {
     UI.mostrarLoader();
     try {
         noticias = await API.obtenerNoticias();
+        console.log("📦 Noticias cargadas:", noticias); // 🔍 Debug
         mostrarNoticias();
     } catch (error) {
         console.error(error);
@@ -128,7 +130,7 @@ async function publicarNoticia(e) {
         await cargarNoticias();
     } catch (error) {
         console.error(error);
-        UI.error("No fue posible publicar.");
+        UI.error(error.message || "No fue posible publicar.");
     }
 }
 
@@ -180,11 +182,26 @@ function configurarAcciones() {
    ========================================== */
 
 async function editarNoticia(id) {
-    const noticia = noticias.find(n => String(n.id) === String(id));
-    if (!noticia) return;
+    // 🔥 CORRECCIÓN: Convertir a número para comparar
+    const idNumber = Number(id);
+    const noticia = noticias.find(n => Number(n.id) === idNumber);
+    if (!noticia) {
+        UI.error("No se encontró la noticia para editar.");
+        return;
+    }
 
     const respuesta = await UI.editarNoticia(noticia);
     if (!respuesta.isConfirmed) return;
+
+    // Validar que los campos no estén vacíos
+    if (!respuesta.value.titulo.trim()) {
+        UI.error("El título no puede estar vacío.");
+        return;
+    }
+    if (!respuesta.value.contenido.trim()) {
+        UI.error("El contenido no puede estar vacío.");
+        return;
+    }
 
     try {
         await API.editarNoticia(id, respuesta.value);
@@ -192,24 +209,37 @@ async function editarNoticia(id) {
         await cargarNoticias();
     } catch (error) {
         console.error(error);
-        UI.error("No fue posible editar.");
+        UI.error(error.message || "No fue posible editar.");
     }
 }
 
 /* ==========================================
-   ELIMINAR
+   ELIMINAR (CORREGIDO)
    ========================================== */
 
 async function eliminarNoticia(id) {
+    // 🔥 CORRECCIÓN: Validar que el ID sea válido
+    const idNumber = Number(id);
+    if (isNaN(idNumber) || idNumber <= 0) {
+        UI.error("ID de publicación inválido.");
+        console.error("❌ ID inválido recibido:", id);
+        return;
+    }
+
+    console.log("🗑️ Intentando eliminar con ID:", idNumber);
+
     const confirmar = await UI.confirmarEliminar();
     if (!confirmar.isConfirmed) return;
 
     try {
-        await API.eliminarNoticia(id);
-        UI.exito("Publicación eliminada.");
+        console.log("📤 Enviando eliminación para ID:", idNumber);
+        const resultado = await API.eliminarNoticia(idNumber);
+        console.log("✅ Resultado de eliminación:", resultado);
+        UI.exito("Publicación eliminada correctamente.");
         await cargarNoticias();
     } catch (error) {
-        console.error(error);
-        UI.error("No fue posible eliminar.");
+        console.error("❌ Error al eliminar:", error);
+        // 🔥 CORRECCIÓN: Mostrar el mensaje real del backend
+        UI.error(error.message || "No fue posible eliminar la publicación.");
     }
 }
