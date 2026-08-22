@@ -1,4 +1,8 @@
 (function(){
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+  const boardDocRef = db.collection('kanban').doc('board-state');
+
   const COLUMNS_DEF = [
     { id: 'todo',  title: 'Por hacer', color: '#e74c3c' },
     { id: 'doing', title: 'En curso',  color: '#163E63' },
@@ -21,21 +25,12 @@
 
   function uid(){ return 'c' + Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
 
-  async function getSavedUsername(){
-    try{
-      const res = await window.storage.get(USER_KEY, false);
-      return res && res.value ? res.value : null;
-    }catch(e){
-      return null;
-    }
+  function getSavedUsername(){
+    return localStorage.getItem(USER_KEY);
   }
 
-  async function saveUsername(name){
-    try{
-      await window.storage.set(USER_KEY, name, false);
-    }catch(e){
-      console.error('No se pudo guardar el nombre de usuario', e);
-    }
+  function saveUsername(name){
+    localStorage.setItem(USER_KEY, name);
   }
 
   function renderCurrentUserTag(){
@@ -56,7 +51,7 @@
   }
 
   async function openBoard(){
-    const saved = currentUser || await getSavedUsername();
+    const saved = currentUser || getSavedUsername();
     if(!saved){
       openLogin();
       return;
@@ -65,7 +60,6 @@
     renderCurrentUserTag();
     document.getElementById('landing').style.display = 'none';
     document.getElementById('board').style.display = 'block';
-    loadState();
   }
 
   loginInput.addEventListener('keydown', e => {
@@ -75,32 +69,30 @@
     const name = loginInput.value.trim();
     if(!name) return;
     currentUser = name;
-    await saveUsername(name);
+    saveUsername(name);
     closeLogin();
     renderCurrentUserTag();
     document.getElementById('landing').style.display = 'none';
     document.getElementById('board').style.display = 'block';
-    loadState();
   });
 
-  async function loadState(silent){
-    try{
-      const res = await window.storage.get(STORAGE_KEY, true);
-      if(res && res.value){
-        const parsed = JSON.parse(res.value);
-        state = { todo: parsed.todo || [], doing: parsed.doing || [], done: parsed.done || [] };
+  function subscribeToBoard(){
+    boardDocRef.onSnapshot(snap => {
+      if(snap.exists){
+        const data = snap.data();
+        state = { todo: data.todo || [], doing: data.doing || [], done: data.done || [] };
       }
-    }catch(e){
-      // no hay estado guardado todavia, se queda con el default vacio
-    }
-    if(!silent || !isEditingForm) render();
+      if(!isEditingForm) render();
+    }, err => {
+      console.error('No se pudo escuchar el tablero (revisá el firebaseConfig y las reglas de Firestore)', err);
+    });
   }
 
   async function saveState(){
     try{
-      await window.storage.set(STORAGE_KEY, JSON.stringify(state), true);
+      await boardDocRef.set(state);
     }catch(e){
-      console.error('No se pudo guardar el tablero', e);
+      console.error('No se pudo guardar el tablero (revisá el firebaseConfig y las reglas de Firestore)', e);
     }
   }
 
@@ -283,11 +275,16 @@
     document.getElementById('board').style.display = 'none';
     document.getElementById('landing').style.display = 'flex';
   });
-  document.getElementById('refresh-board').addEventListener('click', () => loadState());
+  document.getElementById('refresh-board').addEventListener('click', async () => {
+    const snap = await boardDocRef.get();
+    if(snap.exists){
+      const data = snap.data();
+      state = { todo: data.todo || [], doing: data.doing || [], done: data.done || [] };
+    }
+    render();
+  });
 
-  // Trae los cambios de otras personas del equipo cada 6s, sin pisar
-  // una tarjeta que se esté escribiendo en este momento.
-  setInterval(() => loadState(true), 6000);
-
-  loadState();
+  // Escucha los cambios del equipo en tiempo real (Firestore avisa apenas
+  // alguien agrega, mueve o borra una tarjeta, sin necesidad de polling).
+  subscribeToBoard();
 })();
