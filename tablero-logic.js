@@ -60,6 +60,7 @@
     renderCurrentUserTag();
     document.getElementById('landing').style.display = 'none';
     document.getElementById('board').style.display = 'block';
+    render();
   }
 
   loginInput.addEventListener('keydown', e => {
@@ -74,6 +75,7 @@
     renderCurrentUserTag();
     document.getElementById('landing').style.display = 'none';
     document.getElementById('board').style.display = 'block';
+    render();
   });
 
   function subscribeToBoard(){
@@ -85,6 +87,7 @@
       if(!isEditingForm) render();
     }, err => {
       console.error('No se pudo escuchar el tablero (revisá el firebaseConfig y las reglas de Firestore)', err);
+      render();
     });
   }
 
