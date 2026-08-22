@@ -1,10 +1,9 @@
-// Pegá acá el firebaseConfig que te dio la consola de Firebase
-// (Configuración del proyecto → Tus apps → ícono "</>")
+// Configuración del proyecto de Firebase (BoB-tablerokamban)
 const firebaseConfig = {
-  apiKey: "PEGA_ACA_TU_API_KEY",
-  authDomain: "PEGA_ACA_TU_AUTH_DOMAIN",
-  projectId: "PEGA_ACA_TU_PROJECT_ID",
-  storageBucket: "PEGA_ACA_TU_STORAGE_BUCKET",
-  messagingSenderId: "PEGA_ACA_TU_SENDER_ID",
-  appId: "PEGA_ACA_TU_APP_ID"
+  apiKey: "AIzaSyCHJPeYdiaYhnaPYz7Br6EBf_VbLFI4Mvc",
+  authDomain: "bob-tablerokamban.firebaseapp.com",
+  projectId: "bob-tablerokamban",
+  storageBucket: "bob-tablerokamban.firebasestorage.app",
+  messagingSenderId: "622133526172",
+  appId: "1:622133526172:web:a125718d5b35bce4d5b759"
 };
