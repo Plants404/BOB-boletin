@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tablero de equipo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tablero-style.css">
+</head>
+<body>
+
+
+<div id="landing">
+  <div class="landing-inner">
+    <p class="eyebrow">Tablero de equipo</p>
+    <h1 class="title">Lo que hace el equipo,<br>en un <em>tablero compartido</em>.</h1>
+    <p class="subtitle">Tres columnas y nada más. Todos ven las mismas tarjetas y las mueven a medida que avanza el trabajo.</p>
+    <div class="cta-row">
+      <button class="cta" id="enter-board">Abrir el tablero →</button>
+      <span class="cta-note">compartido — todo el equipo ve lo mismo</span>
+    </div>
+    <div class="card-stack">
+      <div class="stack-card sc1">
+        <span class="tag" style="background:rgba(231,76,60,0.12); color:#e74c3c;">POR HACER</span>
+        <div class="line"></div>
+        <div class="line short"></div>
+      </div>
+      <div class="stack-card sc2">
+        <span class="tag" style="background:rgba(22,62,99,0.1); color:#163E63;">EN CURSO</span>
+        <div class="line"></div>
+        <div class="line short"></div>
+      </div>
+      <div class="stack-card sc3">
+        <span class="tag" style="background:rgba(46,204,113,0.14); color:#27ae60;">HECHO</span>
+        <div class="line"></div>
+        <div class="line short" style="width:40%;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="board">
+  <div class="board-header">
+    <div class="board-header-inner">
+      <div class="board-header-left">
+        <h2 class="board-title">Tablero</h2>
+        <span class="board-meta" id="board-meta"></span>
+      </div>
+      <div class="header-actions">
+        <span class="current-user" id="current-user-tag"></span>
+        <button class="back-link" id="refresh-board" title="Traer los últimos cambios del equipo">↻ actualizar</button>
+        <button class="back-link" id="back-to-landing">← volver</button>
+      </div>
+    </div>
+  </div>
+  <div class="columns" id="columns"></div>
+</div>
+
+<div id="login-overlay">
+  <div class="login-card">
+    <p class="login-eyebrow">Antes de entrar</p>
+    <h3 class="login-title">¿Quién sos?</h3>
+    <input type="text" id="login-input" placeholder="Tu nombre" maxlength="30">
+    <button id="login-submit">Entrar al tablero</button>
+    <p class="login-hint">Solo es para identificar tus tarjetas dentro del equipo — no es una contraseña, cualquiera con el archivo puede entrar con cualquier nombre.</p>
+  </div>
+</div>
+
+
+<script src="tablero-logic.js"></script>
+</body>
+</html>
