@@ -278,3 +278,45 @@ const UI = (() => {
 
 // ⭐ EXPONER UI GLOBALMENTE PARA QUE APP.JS PUEDA ACCEDER
 window.UI = UI;
+
+
+/* ==========================
+   MENÚ HAMBURGUESA (MÓVIL)
+========================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+    const toggle = document.getElementById("menuToggle");
+    const nav = document.getElementById("menuPrincipal");
+    if (!toggle || !nav) return;
+
+    function cerrar() {
+        document.body.classList.remove("menu-open");
+        toggle.setAttribute("aria-expanded", "false");
+        toggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
+        toggle.setAttribute("aria-label", "Abrir menú");
+    }
+
+    toggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const abierto = document.body.classList.toggle("menu-open");
+        toggle.setAttribute("aria-expanded", String(abierto));
+        toggle.innerHTML = abierto
+            ? '<i class="fa-solid fa-xmark"></i>'
+            : '<i class="fa-solid fa-bars"></i>';
+        toggle.setAttribute("aria-label", abierto ? "Cerrar menú" : "Abrir menú");
+    });
+
+    nav.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", cerrar);
+    });
+
+    document.addEventListener("click", (e) => {
+        if (document.body.classList.contains("menu-open") && !nav.contains(e.target) && !toggle.contains(e.target)) {
+            cerrar();
+        }
+    });
+
+    window.addEventListener("resize", () => {
+        if (window.innerWidth > 768) cerrar();
+    });
+});

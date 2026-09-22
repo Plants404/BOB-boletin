@@ -179,6 +179,131 @@ nav a:hover{
 
 
 /* =====================================================
+   MENÚ HAMBURGUESA
+===================================================== */
+
+.menu-toggle{
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:center;
+
+    width:44px;
+
+    height:44px;
+
+    background:rgba(255,255,255,0.12);
+
+    color:#ffffff;
+
+    border:none;
+
+    border-radius:10px;
+
+    font-size:20px;
+
+    cursor:pointer;
+
+    transition:var(--transition);
+
+}
+
+.menu-toggle:hover{
+
+    background:var(--secondary);
+
+    transform:translateY(-1px);
+
+}
+
+.menu-toggle i{
+
+    pointer-events:none;
+
+}
+
+@media(max-width:768px){
+
+    .menu-toggle{
+
+        display:inline-flex;
+
+    }
+
+    header .container{
+
+        flex-direction:row;
+
+        justify-content:space-between;
+
+        align-items:center;
+
+        gap:12px;
+
+        padding:12px 0;
+
+    }
+
+    header .container nav{
+
+        position:absolute;
+
+        top:100%;
+
+        left:0;
+
+        right:0;
+
+        background:var(--primary);
+
+        border-top:1px solid rgba(255,255,255,0.15);
+
+        box-shadow:0 15px 30px rgba(0,0,0,.18);
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+        justify-content:flex-start;
+
+        gap:0;
+
+        padding:8px 20px 18px;
+
+        display:none;
+
+    }
+
+    body.menu-open header .container nav{
+
+        display:flex;
+
+    }
+
+    header .container nav a{
+
+        width:100%;
+
+        padding:14px 12px;
+
+        border-bottom:1px solid rgba(255,255,255,0.12);
+
+        font-size:15px;
+
+    }
+
+    header .container nav a:last-child{
+
+        border-bottom:none;
+
+    }
+
+}
+
+
+/* =====================================================
    HERO
 ===================================================== */
 
@@ -1509,6 +1634,47 @@ form input:focus{
     padding:12px;
     text-align:center;
     width:100%;
+}
+
+
+/* =====================================================
+   QUILL - RESPONSIVE MÓVIL
+===================================================== */
+
+@media(max-width:768px){
+
+    .ql-toolbar.ql-snow .ql-formats{
+        margin:6px 3px;
+    }
+
+    .ql-toolbar.ql-snow .ql-formats button{
+        min-width:30px;
+        min-height:30px;
+    }
+
+    .ql-emoji::after{
+        font-size:18px;
+    }
+
+    .emoji-picker{
+        width:min(92vw,320px);
+        max-width:92vw;
+    }
+
+    .emoji-item{
+        width:38px;
+        height:38px;
+        font-size:22px;
+    }
+
+    .emoji-grid{
+        max-height:min(52vh,260px);
+    }
+
+    .emoji-search{
+        font-size:16px;
+    }
+
 }
 
 

@@ -320,11 +320,19 @@ grid.addEventListener("click", (e) => {
     function posicionar() {
         const rect = boton.getBoundingClientRect();
         const anchoPicker = picker.offsetWidth || 280;
+        const altoPicker = picker.offsetHeight || 320;
+
         let izquierda = rect.left;
         const sobra = izquierda + anchoPicker - window.innerWidth;
         if (sobra > 0) izquierda = Math.max(8, izquierda - sobra);
+
+        let arriba = rect.bottom + 8;
+        if (arriba + altoPicker > window.innerHeight) {
+            arriba = Math.max(8, rect.top - altoPicker - 8);
+        }
+
         picker.style.left = `${izquierda}px`;
-        picker.style.top = `${rect.bottom + 8}px`;
+        picker.style.top = `${arriba}px`;
     }
 
     function abrir() {
