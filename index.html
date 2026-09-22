@@ -40,7 +40,10 @@
 
             <img src="image/bob lgo.png"
                  class="logo"
-                 alt="Logo BOB">
+                 alt="Logo BOB"
+                 width="80"
+                 loading="eager"
+                 decoding="async">
 
         </a>
 
@@ -51,12 +54,12 @@
                 Inicio
             </a>
 
-            <a href="#novedades">
+            <a href="novedades.html">
                 <i class="fa-solid fa-newspaper"></i>
                 Novedades
             </a>
 
-            <a href="#publicar">
+            <a href="publicar.html">
                 <i class="fa-solid fa-pen"></i>
                 Publicar
             </a>
@@ -66,10 +69,9 @@
                 Historial
             </a>
         
-                 <a href="tablero-equipo.html">
-                
-                    <i class="fa-solid fa-table-columns">
-                </i>Tablero
+            <a href="tablero-equipo.html">
+                <i class="fa-solid fa-table-columns"></i>
+                Tablero
             </a>
 
         </nav>
@@ -80,113 +82,148 @@
 
 <main>
 
-<!-- HERO -->
+<!-- HERO DIFERENCIADO -->
 
-<section class="hero" id="inicio">
+<section class="hero hero-home" id="inicio">
 
     <div class="hero-text">
 
-        <h1>Boletín Oficial del Board</h1>
-
-        <p>
-
-            Plataforma oficial para comunicar anuncios,
-            resoluciones, eventos y novedades del Board.
-
+        <p class="hero-eyebrow">
+            <i class="fa-solid fa-shield-halved"></i>
+            Portal Institucional del Board
         </p>
 
-        <a href="#publicar" class="btn">
+        <h1>Boletín Oficial & Gestión Estratégica</h1>
 
-            <i class="fa-solid fa-plus"></i>
+        <p class="hero-desc">
+            Plataforma centralizada para consultar resoluciones oficiales, acceder al historial de comunicaciones y coordinar las tareas del equipo en tiempo real.
+        </p>
 
-            Nueva publicación
+        <div class="hero-cta-group">
 
-        </a>
+            <a href="tablero-equipo.html" class="btn btn-hero-primary">
+                <i class="fa-solid fa-table-columns"></i>
+                Abrir Tablero de Equipo
+            </a>
 
-    </div>
+            <a href="novedades.html" class="btn btn-hero-secondary">
+                <i class="fa-solid fa-newspaper"></i>
+                Ver Novedades
+            </a>
 
-</section>
+            <a href="publicar.html" class="btn btn-hero-outline">
+                <i class="fa-solid fa-pen-to-square"></i>
+                Publicar
+            </a>
 
-<!-- NOVEDADES -->
-
-<section class="novedades" id="novedades">
-
-    <div class="titulo-seccion">
-
-        <h2>
-
-            <i class="fa-solid fa-bullhorn"></i>
-
-            Últimas novedades
-
-        </h2>
-
-        <a href="novedades.html" class="btn-secundario">
-
-            Ver historial →
-
-        </a>
-
-    </div>
-
-    <div id="loading">
-
-        <i class="fa-solid fa-spinner fa-spin"></i>
-
-        Cargando publicaciones...
-
-    </div>
-
-    <div id="contenedorNoticias">
-
-        <!-- JavaScript -->
+        </div>
 
     </div>
 
 </section>
 
-<!-- FORMULARIO -->
+<!-- MÓDULOS DEL BOARD (HUB CENTRAL) -->
 
-<section class="formulario" id="publicar">
+<section class="seccion-modulos" id="modulos">
 
-    <h2>
+    <div class="container">
 
-        <i class="fa-solid fa-pen-to-square"></i>
+        <div class="titulo-seccion-centro">
 
-        Nueva publicación
+            <p class="subtitulo-eyebrow">Ecosistema Integrado</p>
 
-    </h2>
+            <h2>Módulos y Herramientas del Board</h2>
 
-    <form id="newsForm">
+            <p class="texto-seccion-desc">
+                Acceda directamente a las áreas de comunicación, coordinación y gestión oficial.
+            </p>
 
-        <label>Título</label>
+        </div>
 
-        <input
-            type="text"
-            id="titulo"
-            placeholder="Ingrese el título"
-            required>
+        <div class="hub-grid">
 
-        <label>Fecha</label>
+            <!-- Módulo 1: Boletín -->
+            <div class="hub-card">
 
-        <input
-            type="text"
-            id="fecha"
-            required>
+                <div class="hub-icon hub-icon-boletin">
+                    <i class="fa-solid fa-newspaper"></i>
+                </div>
 
-        <label>Contenido</label>
+                <div class="hub-content">
+                    <span class="hub-tag tag-boletin">Comunicación Oficial</span>
+                    <h3>Boletín & Resoluciones</h3>
+                    <p>
+                        Consulte los anuncios oficiales, decisiones estratégicas y actas del Board archivadas y actualizadas permanentemente.
+                    </p>
+                </div>
 
-        <div id="editor"></div>
+                <div class="hub-footer">
+                    <a href="novedades.html" class="hub-action-btn">
+                        <i class="fa-solid fa-book-open"></i>
+                        Ver historial completo
+                    </a>
+                </div>
 
-        <button type="submit">
+            </div>
 
-            <i class="fa-solid fa-paper-plane"></i>
+            <!-- Módulo 2: Tablero Kanban -->
+            <div class="hub-card hub-card-featured">
 
-            Publicar
+                <div class="hub-featured-badge">Colaborativo</div>
 
-        </button>
+                <div class="hub-icon hub-icon-tablero">
+                    <i class="fa-solid fa-table-columns"></i>
+                </div>
 
-    </form>
+                <div class="hub-content">
+                    <span class="hub-tag tag-tablero">Tiempo Real</span>
+                    <h3>Tablero de Equipo</h3>
+                    <p>
+                        Espacio interactivo compartido para organizar las tareas en tres columnas dinámicas: Por hacer, En curso y Hecho.
+                    </p>
+                    <div class="hub-preview-pills">
+                        <span class="pill pill-todo">Por hacer</span>
+                        <span class="pill pill-doing">En curso</span>
+                        <span class="pill pill-done">Hecho</span>
+                    </div>
+                </div>
+
+                <div class="hub-footer">
+                    <a href="tablero-equipo.html" class="hub-action-btn hub-btn-highlight">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        Abrir Tablero Compartido
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- Módulo 3: Publicación -->
+            <div class="hub-card">
+
+                <div class="hub-icon hub-icon-publicar">
+                    <i class="fa-solid fa-pen-nib"></i>
+                </div>
+
+                <div class="hub-content">
+                    <span class="hub-tag tag-publicar">Gestión de Contenido</span>
+                    <h3>Centro de Emisión</h3>
+                    <p>
+                        Redacte y publique nuevas resoluciones oficiales con formato enriquecido, selector de fechas y guardado instantáneo.
+                    </p>
+                </div>
+
+                <div class="hub-footer">
+                    <a href="publicar.html" class="hub-action-btn">
+                        <i class="fa-solid fa-pen-nib"></i>
+                        Ir al Centro de Emisión
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </section>
 

@@ -8,7 +8,6 @@
     { id: 'doing', title: 'En curso',  color: '#163E63' },
     { id: 'done',  title: 'Hecho',     color: '#2ecc71' },
   ];
-  const STORAGE_KEY = 'kanban-board-state';
   const USER_KEY = 'kanban-username';
 
   let state = { todo: [], doing: [], done: [] };
@@ -16,6 +15,7 @@
   let draggedFromCol = null;
   let isEditingForm = false;
   let currentUser = null;
+  let isSaving = false; // flag para evitar múltiples guardados simultáneos
 
   const columnsEl = document.getElementById('columns');
   const boardMeta = document.getElementById('board-meta');
@@ -83,19 +83,46 @@
       if(snap.exists){
         const data = snap.data();
         state = { todo: data.todo || [], doing: data.doing || [], done: data.done || [] };
+      } else {
+        // Si no existe, inicializar con arrays vacíos
+        state = { todo: [], doing: [], done: [] };
       }
-      if(!isEditingForm) render();
+      if(!isEditingForm && !isSaving) render();
     }, err => {
-      console.error('No se pudo escuchar el tablero (revisá el firebaseConfig y las reglas de Firestore)', err);
+      console.error('Error en snapshot:', err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error de conexión',
+        text: 'No se pudo escuchar el tablero. Revisá la consola.',
+      });
       render();
     });
   }
 
+  // Guardar usando transacción para evitar concurrencia
   async function saveState(){
-    try{
-      await boardDocRef.set(state);
-    }catch(e){
-      console.error('No se pudo guardar el tablero (revisá el firebaseConfig y las reglas de Firestore)', e);
+    if (isSaving) return;
+    isSaving = true;
+    try {
+      await db.runTransaction(async (transaction) => {
+        const doc = await transaction.get(boardDocRef);
+        if (!doc.exists) {
+          // Si no existe, lo creamos
+          transaction.set(boardDocRef, state);
+        } else {
+          transaction.set(boardDocRef, state);
+        }
+      });
+      // No mostramos éxito en cada guardado para no saturar
+    } catch(e){
+      console.error('Error al guardar:', e);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al guardar',
+        text: 'No se pudo guardar el tablero. Revisá tu conexión.',
+      });
+    } finally {
+      isSaving = false;
     }
   }
 
@@ -205,10 +232,23 @@
     el.querySelector('.move-right').addEventListener('click', () => {
       if(colIndex < COLUMNS_DEF.length - 1) moveCard(card.id, colId, COLUMNS_DEF[colIndex + 1].id);
     });
-    el.querySelector('.delete-btn').addEventListener('click', () => {
-      state[colId] = state[colId].filter(c => c.id !== card.id);
-      render();
-      saveState();
+    el.querySelector('.delete-btn').addEventListener('click', async () => {
+      // Confirmar eliminación
+      const confirm = await Swal.fire({
+        title: '¿Eliminar tarjeta?',
+        text: 'Esta acción no se puede deshacer.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#163E63',
+        confirmButtonText: 'Eliminar',
+        cancelButtonText: 'Cancelar'
+      });
+      if (confirm.isConfirmed) {
+        state[colId] = state[colId].filter(c => c.id !== card.id);
+        render();
+        await saveState();
+      }
     });
 
     return el;
@@ -221,7 +261,7 @@
     const [card] = state[fromCol].splice(idx, 1);
     state[toCol].push(card);
     render();
-    saveState();
+    saveState(); // no await para no bloquear la UI
   }
 
   function showAddForm(colEl, colId){
@@ -232,7 +272,7 @@
     const form = document.createElement('div');
     form.className = 'add-form';
     form.innerHTML = `
-      <textarea placeholder="Escribi la tarjeta..."></textarea>
+      <textarea placeholder="Escribi la tarjeta..." maxlength="500"></textarea>
       <div class="add-form-actions">
         <button class="btn-save">Agregar</button>
         <button class="btn-cancel">Cancelar</button>
@@ -256,6 +296,8 @@
         state[colId].push({ id: uid(), text, author: currentUser || '—' });
         render();
         saveState();
+        form.remove();
+        addBtn.style.display = 'block';
       } else {
         cancel();
       }
@@ -278,16 +320,47 @@
     document.getElementById('board').style.display = 'none';
     document.getElementById('landing').style.display = 'flex';
   });
+
+  // Botón actualizar: ahora recarga forzada desde Firestore con confirmación
   document.getElementById('refresh-board').addEventListener('click', async () => {
-    const snap = await boardDocRef.get();
-    if(snap.exists){
-      const data = snap.data();
-      state = { todo: data.todo || [], doing: data.doing || [], done: data.done || [] };
+    const result = await Swal.fire({
+      title: 'Actualizar desde el servidor',
+      text: 'Esto descartará cualquier cambio local no guardado. ¿Continuar?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, actualizar',
+      cancelButtonText: 'Cancelar'
+    });
+    if (result.isConfirmed) {
+      try {
+        const snap = await boardDocRef.get();
+        if(snap.exists){
+          const data = snap.data();
+          state = { todo: data.todo || [], doing: data.doing || [], done: data.done || [] };
+          render();
+          Swal.fire({
+            icon: 'success',
+            title: 'Actualizado',
+            timer: 1500,
+            showConfirmButton: false
+          });
+        } else {
+          Swal.fire({
+            icon: 'info',
+            title: 'Sin datos',
+            text: 'No hay tablero guardado aún.'
+          });
+        }
+      } catch(e) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al actualizar',
+          text: 'No se pudo obtener los datos del servidor.'
+        });
+      }
     }
-    render();
   });
 
-  // Escucha los cambios del equipo en tiempo real (Firestore avisa apenas
-  // alguien agrega, mueve o borra una tarjeta, sin necesidad de polling).
+  // Escucha en tiempo real
   subscribeToBoard();
 })();

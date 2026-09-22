@@ -1,6 +1,10 @@
 /* ==========================================
    UI.JS
    Manejo de la interfaz
+   - Skeleton Loaders con Shimmer Effect
+   - Toasts no intrusivos
+   - Badge de sincronización de red
+   - Accesibilidad mejorada (ARIA labels)
    ========================================== */
 
 const UI = (() => {
@@ -9,7 +13,68 @@ const UI = (() => {
     const loading = document.getElementById("loading");
 
     /* ==========================
-       LOADER
+       TOASTS (No bloqueantes)
+    ========================== */
+
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 2600,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+        }
+    });
+
+    function exito(texto) {
+        Toast.fire({
+            icon: "success",
+            title: texto
+        });
+    }
+
+    function error(texto) {
+        Toast.fire({
+            icon: "error",
+            title: texto
+        });
+    }
+
+    function info(texto) {
+        Toast.fire({
+            icon: "info",
+            title: texto
+        });
+    }
+
+    /* ==========================
+       SKELETON LOADERS
+    ========================== */
+
+    function mostrarSkeletons(cantidad = 3) {
+        if (!contenedor) return;
+        ocultarLoader();
+        contenedor.innerHTML = "";
+
+        for (let i = 0; i < cantidad; i++) {
+            const skeleton = document.createElement("article");
+            skeleton.className = "card-noticia skeleton-card";
+            skeleton.setAttribute("aria-hidden", "true");
+            skeleton.innerHTML = `
+                <div class="skeleton-line skeleton-title"></div>
+                <div class="skeleton-line skeleton-text"></div>
+                <div class="skeleton-line skeleton-text"></div>
+                <div class="skeleton-line skeleton-text short"></div>
+                <div class="skeleton-line skeleton-date"></div>
+            `;
+            contenedor.appendChild(skeleton);
+        }
+    }
+
+    /* ==========================
+       LOADER TRADICIONAL
     ========================== */
 
     function mostrarLoader() {
@@ -35,6 +100,30 @@ const UI = (() => {
     }
 
     /* ==========================
+       BADGE DE SINCRONIZACIÓN
+    ========================== */
+
+    function actualizarEstadoSync(estado) {
+        const badges = document.querySelectorAll(".sync-badge");
+        badges.forEach(badge => {
+            badge.className = `sync-badge sync-${estado}`;
+            if (estado === "sincronizado") {
+                badge.innerHTML = `<span class="sync-dot"></span> Sincronizado`;
+                badge.title = "Datos al día con el servidor";
+            } else if (estado === "sincronizando") {
+                badge.innerHTML = `<span class="sync-dot fa-spin"></span> Sincronizando...`;
+                badge.title = "Actualizando información en segundo plano...";
+            } else if (estado === "offline") {
+                badge.innerHTML = `<span class="sync-dot"></span> Sin conexión`;
+                badge.title = "Mostrando datos guardados localmente";
+            } else if (estado === "error") {
+                badge.innerHTML = `<span class="sync-dot"></span> Error de red`;
+                badge.title = "No se pudo sincronizar con el servidor";
+            }
+        });
+    }
+
+    /* ==========================
        LIMPIAR
     ========================== */
 
@@ -51,9 +140,10 @@ const UI = (() => {
     function mostrarVacio() {
         if (!contenedor) return;
         contenedor.innerHTML = `
-            <div class="card-noticia">
+            <div class="card-noticia card-vacia">
+                <i class="fa-solid fa-folder-open" style="font-size: 32px; color: var(--text-light); margin-bottom: 12px;"></i>
                 <h3>No hay novedades</h3>
-                <p>Todavía no se ha publicado ninguna noticia.</p>
+                <p>Todavía no se ha publicado ninguna noticia o no coincide con los filtros aplicados.</p>
             </div>
         `;
     }
@@ -64,15 +154,23 @@ const UI = (() => {
 
     function crearCard(noticia) {
         const card = document.createElement("article");
-        card.className = "card-noticia";
+        card.className = `card-noticia ${noticia._optimistic ? "optimistic-card" : ""}`;
         card.dataset.id = noticia.id;
+
+        const syncIndicator = noticia._optimistic 
+            ? `<span class="tag-sync-optimistic" title="Sincronizando con Google Sheets"><i class="fa-solid fa-arrows-rotate fa-spin"></i> Guardando...</span>` 
+            : "";
 
         card.innerHTML = `
             <div class="card-actions">
-                <button class="action-btn edit" data-id="${noticia.id}" title="Editar">
+                ${syncIndicator}
+                <button class="action-btn copy" data-id="${noticia.id}" title="Copiar al portapapeles" aria-label="Copiar noticia">
+                    <i class="fa-solid fa-copy"></i>
+                </button>
+                <button class="action-btn edit" data-id="${noticia.id}" title="Editar" aria-label="Editar noticia">
                     <i class="fa-solid fa-pen"></i>
                 </button>
-                <button class="action-btn delete" data-id="${noticia.id}" title="Eliminar">
+                <button class="action-btn delete" data-id="${noticia.id}" title="Eliminar" aria-label="Eliminar noticia">
                     <i class="fa-solid fa-trash"></i>
                 </button>
             </div>
@@ -91,6 +189,7 @@ const UI = (() => {
     ========================== */
 
     function pintarNoticias(noticias) {
+        if (!contenedor) return;
         limpiarNoticias();
 
         if (!noticias || noticias.length === 0) {
@@ -100,26 +199,6 @@ const UI = (() => {
 
         noticias.forEach(noticia => {
             contenedor.appendChild(crearCard(noticia));
-        });
-    }
-
-    /* ==========================
-       ALERTAS
-    ========================== */
-
-    function exito(texto) {
-        Swal.fire({
-            icon: "success",
-            title: texto,
-            timer: 1800,
-            showConfirmButton: false
-        });
-    }
-
-    function error(texto) {
-        Swal.fire({
-            icon: "error",
-            title: texto
         });
     }
 
@@ -148,18 +227,25 @@ const UI = (() => {
         const resultado = await Swal.fire({
             title: "Editar publicación",
             html: `
-                <input id="swalTitulo" class="swal2-input" value="${noticia.titulo || ""}">
-                <textarea id="swalContenido" class="swal2-textarea">${noticia.contenido || ""}</textarea>
+                <input id="swalTitulo" class="swal2-input" placeholder="Título" value="${(noticia.titulo || "").replace(/"/g, "&quot;")}">
+                <textarea id="swalContenido" class="swal2-textarea" placeholder="Contenido">${noticia.contenido || noticia.descripcion || ""}</textarea>
                 <input id="swalFecha" class="swal2-input" type="date" value="${noticia.fecha || ""}">
             `,
             showCancelButton: true,
             confirmButtonText: "Guardar",
             cancelButtonText: "Cancelar",
             preConfirm: () => {
+                const tit = document.getElementById("swalTitulo").value;
+                const cont = document.getElementById("swalContenido").value;
+                const fec = document.getElementById("swalFecha").value;
+                if (!tit.trim() || !cont.trim()) {
+                    Swal.showValidationMessage("El título y el contenido no pueden estar vacíos.");
+                    return false;
+                }
                 return {
-                    titulo: document.getElementById("swalTitulo").value,
-                    contenido: document.getElementById("swalContenido").value,
-                    fecha: document.getElementById("swalFecha").value
+                    titulo: tit,
+                    contenido: cont,
+                    fecha: fec
                 };
             }
         });
@@ -174,13 +260,16 @@ const UI = (() => {
     return {
         mostrarLoader,
         ocultarLoader,
-        mostrarLoadingConTexto, // antes se llamaba 'loading'
+        mostrarLoadingConTexto,
+        mostrarSkeletons,
+        actualizarEstadoSync,
         limpiarNoticias,
         mostrarVacio,
         pintarNoticias,
         crearCard,
         exito,
         error,
+        info,
         confirmarEliminar,
         editarNoticia
     };

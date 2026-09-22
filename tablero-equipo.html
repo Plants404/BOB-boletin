@@ -3,15 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tablero de equipo</title>
+<title>Tablero de equipo | BOB</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 <link rel="stylesheet" href="tablero-style.css">
 </head>
 <body>
 
-
 <div id="landing">
+
+  <!-- BARRA DE NAVEGACIÓN INSTITUCIONAL DE RETORNO -->
+  <header class="tablero-nav">
+    <div class="tablero-nav-inner">
+      <a href="index.html" class="tablero-logo-link" title="Ir al Inicio de BOB">
+        <img src="image/bob lgo.png" alt="Logo BOB" class="tablero-logo" width="48" height="auto">
+        <span class="tablero-brand">BOB <span>| Tablero</span></span>
+      </a>
+      <div class="tablero-nav-links">
+        <a href="novedades.html" class="tablero-nav-link">
+          <i class="fa-solid fa-newspaper"></i> Boletín
+        </a>
+        <a href="index.html" class="btn-return-home">
+          <i class="fa-solid fa-house"></i> Volver al Inicio
+        </a>
+      </div>
+    </div>
+  </header>
   <div class="landing-inner">
     <p class="eyebrow">Tablero de equipo</p>
     <h1 class="title">Lo que hace el equipo,<br>en un <em>tablero compartido</em>.</h1>
@@ -49,8 +68,14 @@
       </div>
       <div class="header-actions">
         <span class="current-user" id="current-user-tag"></span>
-        <button class="back-link" id="refresh-board" title="Traer los últimos cambios del equipo">↻ actualizar</button>
-        <button class="back-link" id="back-to-landing">← volver</button>
+        <a href="index.html" class="btn-return-home-sm" title="Regresar a la página principal">
+          <i class="fa-solid fa-house"></i> Inicio
+        </a>
+        <a href="novedades.html" class="back-link" title="Ir al Boletín Oficial">
+          <i class="fa-solid fa-newspaper"></i> Boletín
+        </a>
+        <button class="back-link" id="refresh-board" title="Forzar actualización desde el servidor">↻ actualizar</button>
+        <button class="back-link" id="back-to-landing">← portada</button>
       </div>
     </div>
   </div>
@@ -70,6 +95,7 @@
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="tablero-config.js"></script>
 <script src="tablero-logic.js"></script>
 </body>

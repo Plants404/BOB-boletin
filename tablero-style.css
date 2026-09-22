@@ -32,6 +32,105 @@
   ::-webkit-scrollbar-thumb{background:var(--primary); border-radius:20px;}
   ::-webkit-scrollbar-thumb:hover{background:var(--secondary);}
 
+  /* ===== NAVEGACIÓN INSTITUCIONAL ===== */
+  .tablero-nav{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:30;
+    padding:16px 24px;
+    background:rgba(22, 62, 99, 0.45);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid rgba(255, 255, 255, 0.12);
+  }
+  .tablero-nav-inner{
+    max-width:1240px;
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+  }
+  .tablero-logo-link{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    text-decoration:none;
+    color:#ffffff;
+  }
+  .tablero-logo{
+    width:48px;
+    height:auto;
+    display:block;
+  }
+  .tablero-brand{
+    font-size:17px;
+    font-weight:700;
+    letter-spacing:0.5px;
+  }
+  .tablero-brand span{
+    font-weight:400;
+    opacity:0.85;
+  }
+  .tablero-nav-links{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .tablero-nav-link{
+    color:rgba(255, 255, 255, 0.9);
+    text-decoration:none;
+    font-size:14px;
+    font-weight:500;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:8px 14px;
+    border-radius:8px;
+    transition:var(--transition);
+  }
+  .tablero-nav-link:hover{
+    color:var(--secondary);
+    background:rgba(255, 255, 255, 0.1);
+  }
+  .btn-return-home{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--secondary);
+    color:#ffffff;
+    text-decoration:none;
+    padding:9px 18px;
+    border-radius:10px;
+    font-size:14px;
+    font-weight:600;
+    transition:var(--transition);
+    box-shadow:0 4px 14px rgba(0, 0, 0, 0.18);
+  }
+  .btn-return-home:hover{
+    background:var(--secondary-dark);
+    transform:translateY(-2px);
+  }
+  .btn-return-home-sm{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:var(--secondary);
+    color:#ffffff;
+    text-decoration:none;
+    padding:6px 14px;
+    border-radius:8px;
+    font-size:13px;
+    font-weight:600;
+    transition:var(--transition);
+  }
+  .btn-return-home-sm:hover{
+    background:var(--secondary-dark);
+    transform:translateY(-1px);
+  }
+
   /* ===== LANDING (HERO) ===== */
   #landing{
     min-height:100vh;
@@ -39,9 +138,10 @@
     align-items:center;
     justify-content:center;
     text-align:center;
-    padding:80px 20px;
+    padding:100px 20px 80px;
     background:linear-gradient(135deg, var(--primary), #1b5d8f);
     color:#ffffff;
+    position:relative;
   }
   .landing-inner{max-width:760px; width:100%;}
   .eyebrow{

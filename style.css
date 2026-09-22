@@ -244,6 +244,512 @@ nav a:hover{
 
 
 /* =====================================================
+   HERO DIFERENCIADO (HOME / HUB DE MANDO)
+===================================================== */
+
+.hero-home{
+
+    padding:110px 20px;
+
+}
+
+.hero-home .hero-eyebrow{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    background:rgba(255,255,255,0.14);
+
+    border:1px solid rgba(255,255,255,0.25);
+
+    padding:8px 16px;
+
+    border-radius:30px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    letter-spacing:0.06em;
+
+    text-transform:uppercase;
+
+    margin-bottom:22px;
+
+    backdrop-filter:blur(4px);
+
+}
+
+.hero-home .hero-eyebrow i{
+
+    color:#d9efc5;
+
+}
+
+.hero-desc{
+
+    max-width:640px;
+
+    margin:0 auto 30px;
+
+    opacity:1;
+
+}
+
+.hero-cta-group{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:14px;
+
+    flex-wrap:wrap;
+
+}
+
+.btn-hero-primary{
+
+    background:var(--secondary);
+
+    color:#ffffff;
+
+}
+
+.btn-hero-primary:hover{
+
+    background:var(--secondary-dark);
+
+}
+
+.btn-hero-secondary{
+
+    background:#ffffff;
+
+    color:var(--primary);
+
+}
+
+.btn-hero-secondary:hover{
+
+    background:#d9efc5;
+
+    color:var(--primary-dark);
+
+}
+
+.btn-hero-outline{
+
+    background:transparent;
+
+    color:#ffffff;
+
+    border:2px solid rgba(255,255,255,0.45);
+
+}
+
+.btn-hero-outline:hover{
+
+    background:rgba(255,255,255,0.12);
+
+    border-color:#ffffff;
+
+    color:#ffffff;
+
+}
+
+
+/* =====================================================
+   HUB DE MÓDULOS (HOME)
+===================================================== */
+
+.seccion-modulos{
+
+    background:var(--background);
+
+}
+
+.titulo-seccion-centro{
+
+    text-align:center;
+
+    max-width:720px;
+
+    margin:0 auto 50px;
+
+}
+
+.subtitulo-eyebrow{
+
+    display:inline-block;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    letter-spacing:0.1em;
+
+    text-transform:uppercase;
+
+    color:var(--secondary-dark);
+
+    border:1px solid rgba(113,181,43,0.35);
+
+    background:rgba(113,181,43,0.08);
+
+    padding:6px 16px;
+
+    border-radius:24px;
+
+    margin-bottom:16px;
+
+}
+
+.titulo-seccion-centro h2{
+
+    color:var(--primary);
+
+    font-size:34px;
+
+    margin-bottom:12px;
+
+}
+
+.texto-seccion-desc{
+
+    color:var(--text-light);
+
+    font-size:16px;
+
+}
+
+.hub-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:28px;
+
+}
+
+.hub-card{
+
+    position:relative;
+
+    background:var(--surface);
+
+    border:1px solid transparent;
+
+    border-radius:20px;
+
+    padding:32px;
+
+    box-shadow:var(--shadow);
+
+    display:flex;
+
+    flex-direction:column;
+
+    overflow:hidden;
+
+    transition:var(--transition);
+
+}
+
+.hub-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 20px 45px rgba(0,0,0,0.12);
+
+    border-color:rgba(22,62,99,0.12);
+
+}
+
+.hub-card-featured{
+
+    border:1px solid rgba(113,181,43,0.4);
+
+    background:linear-gradient(180deg,#ffffff 0%,#f7fcf2 100%);
+
+}
+
+.hub-featured-badge{
+
+    position:absolute;
+
+    top:20px;
+
+    right:-32px;
+
+    transform:rotate(45deg);
+
+    background:var(--secondary);
+
+    color:#ffffff;
+
+    font-size:11px;
+
+    font-weight:600;
+
+    letter-spacing:0.04em;
+
+    text-transform:uppercase;
+
+    padding:5px 36px;
+
+}
+
+.hub-icon{
+
+    width:58px;
+
+    height:58px;
+
+    border-radius:16px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:24px;
+
+    margin-bottom:22px;
+
+}
+
+.hub-icon-boletin{
+
+    background:rgba(22,62,99,0.1);
+
+    color:var(--primary);
+
+}
+
+.hub-icon-tablero{
+
+    background:rgba(113,181,43,0.12);
+
+    color:var(--secondary-dark);
+
+}
+
+.hub-icon-publicar{
+
+    background:rgba(52,152,219,0.12);
+
+    color:#2980b9;
+
+}
+
+.hub-content{
+
+    flex:1;
+
+}
+
+.hub-tag{
+
+    display:inline-block;
+
+    font-size:11px;
+
+    font-weight:600;
+
+    letter-spacing:0.06em;
+
+    text-transform:uppercase;
+
+    padding:5px 11px;
+
+    border-radius:20px;
+
+    margin-bottom:14px;
+
+}
+
+.tag-boletin{
+
+    background:rgba(22,62,99,0.1);
+
+    color:var(--primary);
+
+}
+
+.tag-tablero{
+
+    background:rgba(113,181,43,0.14);
+
+    color:var(--secondary-dark);
+
+}
+
+.tag-publicar{
+
+    background:rgba(52,152,219,0.12);
+
+    color:#2980b9;
+
+}
+
+.hub-content h3{
+
+    color:var(--primary);
+
+    font-size:21px;
+
+    margin:0 0 12px;
+
+}
+
+.hub-content p{
+
+    color:var(--text-light);
+
+    font-size:14.5px;
+
+    line-height:1.7;
+
+    margin-bottom:16px;
+
+    opacity:1;
+
+}
+
+.hub-preview-pills{
+
+    display:flex;
+
+    gap:8px;
+
+    flex-wrap:wrap;
+
+}
+
+.pill{
+
+    font-size:11.5px;
+
+    font-weight:600;
+
+    padding:5px 12px;
+
+    border-radius:20px;
+
+}
+
+.pill-todo{
+
+    background:rgba(231,76,60,0.12);
+
+    color:#e74c3c;
+
+}
+
+.pill-doing{
+
+    background:rgba(22,62,99,0.1);
+
+    color:var(--primary);
+
+}
+
+.pill-done{
+
+    background:rgba(46,204,113,0.14);
+
+    color:#27ae60;
+
+}
+
+.hub-footer{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:12px;
+
+    flex-wrap:wrap;
+
+    margin-top:24px;
+
+    padding-top:20px;
+
+    border-top:1px solid var(--border);
+
+}
+
+.hub-action-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    background:var(--secondary);
+
+    color:#ffffff;
+
+    font-size:13.5px;
+
+    font-weight:600;
+
+    padding:11px 18px;
+
+    border-radius:11px;
+
+    transition:var(--transition);
+
+}
+
+.hub-action-btn:hover{
+
+    background:var(--secondary-dark);
+
+    transform:translateY(-2px);
+
+}
+
+.hub-btn-highlight{
+
+    background:var(--primary);
+
+}
+
+.hub-btn-highlight:hover{
+
+    background:var(--primary-dark);
+
+}
+
+.hub-link{
+
+    color:var(--primary);
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+.hub-link:hover{
+
+    color:var(--secondary-dark);
+
+}
+
+
+/* =====================================================
    SECCIONES
 ===================================================== */
 
@@ -352,19 +858,99 @@ button:hover{
 
 
 /* =====================================================
-   LOADER
+   LOADER & SKELETON LOADERS
 ===================================================== */
 
 #loading{
-
     text-align:center;
-
     padding:25px;
-
     color:var(--text-light);
-
     font-size:18px;
+    display:none;
+}
 
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.skeleton-card {
+    pointer-events: none;
+    user-select: none;
+    opacity: 0.9;
+}
+
+.skeleton-line {
+    border-radius: 8px;
+    background: linear-gradient(90deg, #f0f3f6 25%, #e2e8ee 37%, #f0f3f6 63%);
+    background-size: 400% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+    margin-bottom: 12px;
+}
+
+.skeleton-title {
+    height: 24px;
+    width: 75%;
+    margin-bottom: 20px;
+}
+
+.skeleton-text {
+    height: 14px;
+    width: 100%;
+}
+
+.skeleton-text.short {
+    width: 60%;
+}
+
+.skeleton-date {
+    height: 12px;
+    width: 35%;
+    margin-top: 15px;
+}
+
+/* =====================================================
+   BADGE DE SINCRONIZACIÓN
+===================================================== */
+
+.sync-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    backdrop-filter: blur(4px);
+    transition: var(--transition);
+}
+
+.sync-badge .sync-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.sync-sincronizado .sync-dot {
+    background: var(--secondary);
+    box-shadow: 0 0 8px var(--secondary);
+}
+
+.sync-sincronizando .sync-dot {
+    background: #f1c40f;
+    box-shadow: 0 0 8px #f1c40f;
+}
+
+.sync-offline .sync-dot {
+    background: #bdc3c7;
+}
+
+.sync-error .sync-dot {
+    background: var(--danger);
+    box-shadow: 0 0 8px var(--danger);
 }
 
 
@@ -600,28 +1186,56 @@ button:hover{
 
 }
 
+.copy{
+    background:#6c5ce7;
+}
+
+.copy:hover{
+    background:#5641e5;
+}
+
 .edit{
-
     background:#3498db;
-
 }
 
 .edit:hover{
-
     background:#2980b9;
-
 }
 
 .delete{
-
     background:var(--danger);
-
 }
 
 .delete:hover{
-
     background:var(--danger-dark);
+}
 
+.tag-sync-optimistic{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    background:rgba(243, 156, 18, 0.15);
+    color:#d35400;
+    padding:4px 9px;
+    border-radius:8px;
+    font-size:12px;
+    font-weight:600;
+}
+
+.optimistic-card{
+    border: 1px dashed var(--secondary);
+    transition: var(--transition);
+}
+
+.card-vacia{
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 50px 20px;
+}
+
+:focus-visible{
+    outline: 2px solid var(--secondary);
+    outline-offset: 3px;
 }
 /* =====================================================
    FORMULARIO
@@ -751,6 +1365,150 @@ form input:focus{
 
     font-style:normal;
 
+}
+
+
+/* =====================================================
+   QUILL - FUENTES PERSONALIZADAS (TIPO WORD)
+===================================================== */
+
+.ql-font-arial{ font-family:'Arial',Helvetica,sans-serif; }
+.ql-font-verdana{ font-family:'Verdana',Geneva,sans-serif; }
+.ql-font-trebuchet{ font-family:'Trebuchet MS',Helvetica,sans-serif; }
+.ql-font-times{ font-family:'Times New Roman',Times,serif; }
+.ql-font-georgia{ font-family:'Georgia',Cambria,serif; }
+.ql-font-garamond{ font-family:'Garamond',Georgia,serif; }
+.ql-font-courier{ font-family:'Courier New',Courier,monospace; }
+.ql-font-impact{ font-family:'Impact',Haettenschweiler,sans-serif; }
+.ql-font-comic{ font-family:'Comic Sans MS','Comic Sans',cursive; }
+
+
+/* =====================================================
+   QUILL - BOTONES UNDO / REDO
+===================================================== */
+
+.ql-undo::after{
+    content:"↶";
+    font-size:16px;
+    line-height:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    height:100%;
+}
+
+.ql-redo::after{
+    content:"↷";
+    font-size:16px;
+    line-height:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    height:100%;
+}
+
+
+/* =====================================================
+   QUILL - BOTÓN EMOJI
+===================================================== */
+
+.ql-emoji{
+    position:relative;
+}
+
+.ql-emoji::after{
+    content:"😊";
+    font-size:16px;
+    line-height:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    height:100%;
+}
+
+.ql-emoji.ql-active{
+    background:#d9efc5 !important;
+    color:var(--primary);
+}
+
+
+/* =====================================================
+   QUILL - SELECTOR DE EMOJIS (PICKER)
+===================================================== */
+
+.emoji-picker{
+    position:fixed;
+    z-index:2000;
+    width:290px;
+    max-width:calc(100vw - 24px);
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:14px;
+    box-shadow:0 15px 40px rgba(0,0,0,.18);
+    padding:12px;
+    display:none;
+}
+
+.emoji-picker.open{
+    display:block;
+}
+
+.emoji-search{
+    width:100%;
+    padding:9px 12px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    font-family:inherit;
+    font-size:14px;
+    color:var(--text);
+    margin-bottom:10px;
+    background:var(--surface);
+    transition:var(--transition);
+}
+
+.emoji-search:focus{
+    outline:none;
+    border-color:var(--secondary);
+    box-shadow:0 0 0 3px rgba(113,181,43,.2);
+}
+
+.emoji-grid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:2px;
+    max-height:220px;
+    overflow-y:auto;
+}
+
+.emoji-item{
+    width:34px;
+    height:34px;
+    border:none;
+    background:none;
+    font-size:20px;
+    cursor:pointer;
+    border-radius:8px;
+    padding:0;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    transition:var(--transition);
+}
+
+.emoji-item:hover{
+    background:rgba(113,181,43,.15);
+    transform:scale(1.15);
+}
+
+.emoji-empty{
+    color:var(--text-light);
+    font-size:13px;
+    padding:12px;
+    text-align:center;
+    width:100%;
 }
 
 
@@ -977,6 +1735,16 @@ button:hover{
 
     }
 
+    .hub-grid{
+
+        grid-template-columns:1fr;
+
+        max-width:520px;
+
+        margin:0 auto;
+
+    }
+
 }
 
 @media(max-width:768px){
@@ -1058,6 +1826,18 @@ button:hover{
     .formulario{
 
         padding:30px;
+
+    }
+
+    .hero-cta-group .btn{
+
+        width:100%;
+
+    }
+
+    .titulo-seccion-centro h2{
+
+        font-size:27px;
 
     }
 

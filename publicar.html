@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nueva publicación | BOB</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- Quill -->
+    <link href="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.snow.css" rel="stylesheet">
+
+    <!-- Flatpickr -->
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="container">
+
+        <a href="index.html">
+
+            <img
+                src="image/bob lgo.png"
+                class="logo"
+                alt="Logo BOB"
+                width="80"
+                loading="eager"
+                decoding="async">
+
+        </a>
+
+        <nav>
+
+            <a href="index.html">
+
+                <i class="fa-solid fa-house"></i>
+
+                Inicio
+
+            </a>
+
+            <a href="novedades.html">
+
+                <i class="fa-solid fa-newspaper"></i>
+
+                Novedades
+
+            </a>
+
+            <a href="publicar.html">
+
+                <i class="fa-solid fa-pen"></i>
+
+                Publicar
+
+            </a>
+
+            <a href="novedades.html">
+
+                <i class="fa-solid fa-book-open"></i>
+
+                Historial
+
+            </a>
+
+            <a href="tablero-equipo.html">
+
+                <i class="fa-solid fa-table-columns"></i>
+
+                Tablero
+
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+<main>
+
+<section class="hero hero-small">
+
+    <div class="hero-text">
+
+        <p class="hero-eyebrow">
+            <i class="fa-solid fa-pen-nib"></i>
+            Centro de Emisión Oficial
+        </p>
+
+        <h1>
+
+            Nueva publicación
+
+        </h1>
+
+        <p>
+
+            Redacte y publique nuevas resoluciones oficiales del Board.
+
+        </p>
+
+    </div>
+
+</section>
+
+<section class="formulario" id="publicar">
+
+    <h2>
+
+        <i class="fa-solid fa-pen-to-square"></i>
+
+        Nueva publicación
+
+    </h2>
+
+    <form id="newsForm">
+
+        <label>Título</label>
+
+        <input
+            type="text"
+            id="titulo"
+            placeholder="Ingrese el título"
+            required>
+
+        <label>Fecha</label>
+
+        <input
+            type="text"
+            id="fecha"
+            required>
+
+        <label>Contenido</label>
+
+        <div id="editor"></div>
+
+        <button type="submit">
+
+            <i class="fa-solid fa-paper-plane"></i>
+
+            Publicar
+
+        </button>
+
+    </form>
+
+</section>
+
+</main>
+
+<footer>
+
+    <p>
+
+        © 2026 Boletín Oficial del Board
+
+    </p>
+
+</footer>
+
+<!-- LIBRERÍAS -->
+
+<script src="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- JS -->
+
+<script src="editor.js"></script>
+
+<script src="calendario.js"></script>
+
+<script src="ui.js"></script>
+<script src="api.js"></script>
+<script src="app.js"></script>
+</body>
+
+</html>
