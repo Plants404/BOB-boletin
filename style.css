@@ -138,6 +138,16 @@ header .container{
 
     width:80px;
 
+    flex-shrink:0;
+
+}
+
+header .container > a{
+
+    display:flex;
+
+    align-items:center;
+
 }
 
 
@@ -224,7 +234,7 @@ nav a:hover{
 
 }
 
-@media(max-width:768px){
+@media(max-width:992px){
 
     .menu-toggle{
 
@@ -1917,7 +1927,11 @@ button:hover{
 
     header .container{
 
-        flex-direction:column;
+        flex-direction:row;
+
+        justify-content:space-between;
+
+        align-items:center;
 
         gap:20px;
 

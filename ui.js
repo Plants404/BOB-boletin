@@ -317,6 +317,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     window.addEventListener("resize", () => {
-        if (window.innerWidth > 768) cerrar();
+        if (window.innerWidth > 992) cerrar();
     });
 });
