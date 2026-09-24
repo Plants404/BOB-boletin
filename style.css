@@ -1357,6 +1357,91 @@ button:hover{
     font-weight:600;
 }
 
+
+/* =====================================================
+   MENÚ HAMBURGUESA DE TARJETAS
+===================================================== */
+
+.card-menu{
+    position:relative;
+}
+
+.card-menu-toggle{
+    width:38px;
+    height:38px;
+    background:var(--surface) !important;
+    color:var(--primary) !important;
+    border:1px solid var(--border) !important;
+    border-radius:10px;
+    font-size:15px;
+}
+
+.card-menu-toggle:hover{
+    background:var(--background) !important;
+    color:var(--primary-dark) !important;
+    border-color:var(--secondary) !important;
+    transform:none;
+}
+
+.card-menu-items{
+    position:absolute;
+    top:calc(100% + 6px);
+    right:0;
+    z-index:20;
+    min-width:170px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:12px;
+    box-shadow:0 12px 30px rgba(0,0,0,.16);
+    padding:6px;
+    display:none;
+}
+
+.card-menu-items.open{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+}
+
+.card-menu-item{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    width:100%;
+    text-align:left;
+    background:none;
+    border:none;
+    border-radius:8px;
+    padding:9px 12px;
+    font-size:13.5px;
+    font-weight:500;
+    color:var(--text);
+    cursor:pointer;
+    transition:var(--transition);
+    justify-content:flex-start;
+}
+
+.card-menu-item:hover{
+    background:var(--background);
+}
+
+.card-menu-item.copy:hover{
+    color:#5641e5;
+}
+
+.card-menu-item.edit:hover{
+    color:#2980b9;
+}
+
+.card-menu-item.delete{
+    color:var(--danger);
+}
+
+.card-menu-item.delete:hover{
+    background:rgba(231,76,60,.1);
+    color:var(--danger-dark);
+}
+
 .optimistic-card{
     border: 1px dashed var(--secondary);
     transition: var(--transition);
@@ -1788,6 +1873,65 @@ form input:focus{
 .swal2-cancel{
 
     background:var(--primary)!important;
+
+}
+
+
+/* =====================================================
+   SWEET ALERT - MODAL DE EDICIÓN
+===================================================== */
+
+.swal-editar-grid{
+
+    display:flex;
+
+    gap:14px;
+
+    margin-bottom:16px;
+
+}
+
+.swal-editar-grid > div{
+
+    flex:1;
+
+}
+
+.swal-etiqueta{
+
+    display:block;
+
+    text-align:left;
+
+    font-weight:600;
+
+    font-size:13px;
+
+    color:var(--primary);
+
+    margin:0 0 6px;
+
+}
+
+.swal-editar-grid + .swal-etiqueta{
+
+    margin-top:6px;
+
+}
+
+.swal2-popup #editorModal{
+
+    text-align:left;
+
+}
+
+@media(max-width:600px){
+
+    .swal-editar-grid{
+
+        flex-direction:column;
+
+    }
 
 }
 

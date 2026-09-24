@@ -162,17 +162,24 @@ const UI = (() => {
             : "";
 
         card.innerHTML = `
-            <div class="card-actions">
+            <div class="card-actions card-actions-menu">
                 ${syncIndicator}
-                <button class="action-btn copy" data-id="${noticia.id}" title="Copiar al portapapeles" aria-label="Copiar noticia">
-                    <i class="fa-solid fa-copy"></i>
-                </button>
-                <button class="action-btn edit" data-id="${noticia.id}" title="Editar" aria-label="Editar noticia">
-                    <i class="fa-solid fa-pen"></i>
-                </button>
-                <button class="action-btn delete" data-id="${noticia.id}" title="Eliminar" aria-label="Eliminar noticia">
-                    <i class="fa-solid fa-trash"></i>
-                </button>
+                <div class="card-menu">
+                    <button class="action-btn card-menu-toggle" data-id="${noticia.id}" title="Acciones" aria-label="Acciones de la publicación" aria-haspopup="true">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="card-menu-items">
+                        <button class="card-menu-item copy" data-id="${noticia.id}" title="Copiar al portapapeles">
+                            <i class="fa-solid fa-copy"></i> Copiar
+                        </button>
+                        <button class="card-menu-item edit" data-id="${noticia.id}" title="Editar">
+                            <i class="fa-solid fa-pen"></i> Editar
+                        </button>
+                        <button class="card-menu-item delete" data-id="${noticia.id}" title="Eliminar">
+                            <i class="fa-solid fa-trash"></i> Eliminar
+                        </button>
+                    </div>
+                </div>
             </div>
             <h3>${noticia.titulo || ""}</h3>
             <div class="contenido-noticia">
@@ -180,6 +187,18 @@ const UI = (() => {
             </div>
             <small>📅 ${noticia.fecha || ""}</small>
         `;
+
+        const toggle = card.querySelector(".card-menu-toggle");
+        const items = card.querySelector(".card-menu-items");
+        if (toggle && items) {
+            toggle.addEventListener("click", (e) => {
+                e.stopPropagation();
+                document.querySelectorAll(".card-menu-items.open").forEach(menu => {
+                    if (menu !== items) menu.classList.remove("open");
+                });
+                items.classList.toggle("open");
+            });
+        }
 
         return card;
     }
@@ -224,21 +243,44 @@ const UI = (() => {
     ========================== */
 
     async function editarNoticia(noticia) {
+        const editorId = "editorModal";
+        let editarQuill = null;
+
         const resultado = await Swal.fire({
             title: "Editar publicación",
-            html: `
-                <input id="swalTitulo" class="swal2-input" placeholder="Título" value="${(noticia.titulo || "").replace(/"/g, "&quot;")}">
-                <textarea id="swalContenido" class="swal2-textarea" placeholder="Contenido">${noticia.contenido || noticia.descripcion || ""}</textarea>
-                <input id="swalFecha" class="swal2-input" type="date" value="${noticia.fecha || ""}">
-            `,
+            width: "min(920px, 96vw)",
             showCancelButton: true,
             confirmButtonText: "Guardar",
             cancelButtonText: "Cancelar",
+            html: `
+                <div class="swal-editar-grid">
+                    <div>
+                        <label class="swal-etiqueta" for="swalTitulo">Título</label>
+                        <input id="swalTitulo" class="swal2-input" placeholder="Título" value="${(noticia.titulo || "").replace(/"/g, "&quot;")}">
+                    </div>
+                    <div>
+                        <label class="swal-etiqueta" for="swalFecha">Fecha</label>
+                        <input id="swalFecha" class="swal2-input" type="date" value="${noticia.fecha || ""}">
+                    </div>
+                </div>
+                <label class="swal-etiqueta" for="${editorId}">Contenido</label>
+                <div id="${editorId}"></div>
+            `,
+            didOpen: () => {
+                const contenedor = document.getElementById(editorId);
+                editarQuill = window.crearInstanciaQuill
+                    ? crearInstanciaQuill(contenedor, noticia.contenido || noticia.descripcion || "")
+                    : null;
+            },
+            willClose: () => {
+                editarQuill = null;
+            },
             preConfirm: () => {
                 const tit = document.getElementById("swalTitulo").value;
-                const cont = document.getElementById("swalContenido").value;
                 const fec = document.getElementById("swalFecha").value;
-                if (!tit.trim() || !cont.trim()) {
+                const cont = editarQuill ? editarQuill.root.innerHTML : "";
+
+                if (!tit.trim() || !editarQuill || editarQuill.getText().trim() === "") {
                     Swal.showValidationMessage("El título y el contenido no pueden estar vacíos.");
                     return false;
                 }
@@ -319,4 +361,17 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("resize", () => {
         if (window.innerWidth > 992) cerrar();
     });
+});
+
+
+/* ==========================
+   MENÚ HAMBURGUESA DE TARJETAS
+   (acciones: copiar / editar / eliminar)
+========================== */
+
+document.addEventListener("click", (e) => {
+    if (!e.target.closest(".card-menu-toggle")) {
+        document.querySelectorAll(".card-menu-items.open")
+            .forEach(menu => menu.classList.remove("open"));
+    }
 });

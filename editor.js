@@ -5,15 +5,11 @@
      colores, listas, alineación, sub/super)
    - Botones deshacer / rehacer
    - Selector de emojis con búsqueda
+   - Tooltips en español
    ========================================== */
 
 
 let quill = null;
-
-/* Última selección conocida del editor (para emojis) */
-
-let ultimaSeleccion = null;
-
 
 /* Emojis disponibles: { e: emoji, n: nombre de búsqueda } */
 
@@ -122,7 +118,7 @@ const EMOJIS = [
     { e: "📉", n: "grafico bajando" },
     { e: "🗂️", n: "archivo carpetas" },
     { e: "📅", n: "calendario fecha" },
-    { e: "✅", n: "si vistoverde" },
+    { e: "✅", n: "si alternativa verde" },
     { e: "❌", n: "no cruz" },
     { e: "❓", n: "signo pregunta" },
     { e: "❗", n: "exclamacion" },
@@ -201,6 +197,50 @@ const ETIQUETAS_BARRA = {
 };
 
 
+/* Render de la barra (herramientas tipo Word) */
+
+const TOOLBAR = [
+    [{ font: [] }],
+    [{ size: ["small", false, "large", "huge"] }],
+    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+    ["bold", "italic", "underline", "strike"],
+    [{ color: [] }, { background: [] }],
+    [{ script: "sub" }, { script: "super" }],
+    [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+    [{ indent: "-1" }, { indent: "+1" }],
+    [{ align: [] }],
+    ["blockquote", "code-block"],
+    ["link", "image", "video"],
+    ["undo", "redo"],
+    ["clean"]
+];
+
+
+/* Registrar fuentes personalizadas tipo Word (solo una vez) */
+
+let fuentesRegistradas = false;
+
+function registrarFuentes() {
+    if (fuentesRegistradas) return;
+    if (typeof Quill === "undefined") return;
+
+    const Font = Quill.import("attributors/style/font");
+    Font.whitelist = [
+        "arial",
+        "verdana",
+        "trebuchet",
+        "times",
+        "georgia",
+        "garamond",
+        "courier",
+        "impact",
+        "comic"
+    ];
+    Quill.register(Font, true);
+    fuentesRegistradas = true;
+}
+
+
 /* Asignar tooltips a todos los controles de la barra */
 
 function configurarTooltips(barra) {
@@ -228,7 +268,6 @@ function configurarTooltips(barra) {
         const label = picker.querySelector(".ql-picker-label");
         if (label && typeof etiqueta === "string") label.title = etiqueta;
 
-        // Tooltips individuales para las opciones del selector
         if (etiqueta && typeof etiqueta === "object") {
             picker.querySelectorAll(".ql-picker-item").forEach(item => {
                 const valor = item.getAttribute("data-value");
@@ -241,28 +280,24 @@ function configurarTooltips(barra) {
 }
 
 
-/* Render de la barra (herramientas tipo Word) */
+/* Insertar emoji en la posición del cursor */
 
-const TOOLBAR = [
-    [{ font: [] }],
-    [{ size: ["small", false, "large", "huge"] }],
-    [{ header: [1, 2, 3, 4, 5, 6, false] }],
-    ["bold", "italic", "underline", "strike"],
-    [{ color: [] }, { background: [] }],
-    [{ script: "sub" }, { script: "super" }],
-    [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
-    [{ indent: "-1" }, { indent: "+1" }],
-    [{ align: [] }],
-    ["blockquote", "code-block"],
-    ["link", "image", "video"],
-    ["undo", "redo"],
-    ["clean"]
-];
+function insertarEmoji(editor, emoji, obtenerRango) {
+    const rango = editor.getSelection()
+        || (obtenerRango ? obtenerRango() : null)
+        || { index: editor.getLength() };
+    const indice = rango ? rango.index : editor.getLength();
+    editor.insertText(indice, emoji, "user");
+    editor.setSelection(indice + emoji.length, 0);
+    editor.focus();
+}
 
 
-/* Configuración del selector de emojis */
+/* Armado del selector de emojis */
 
-function construirPicker(quill, boton) {
+function construirPicker(editor, boton, obtenerRango) {
+    document.querySelectorAll(".emoji-picker").forEach(p => p.remove());
+
     const picker = document.createElement("div");
     picker.className = "emoji-picker";
     picker.setAttribute("role", "dialog");
@@ -309,13 +344,13 @@ function construirPicker(quill, boton) {
         renderizar();
     });
 
-grid.addEventListener("click", (e) => {
-            const item = e.target.closest(".emoji-item");
-            if (!item) return;
-            insertarEmoji(quill, item.dataset.emoji);
-            boton.classList.remove("ql-active");
-            cerrar();
-        });
+    grid.addEventListener("click", (e) => {
+        const item = e.target.closest(".emoji-item");
+        if (!item) return;
+        insertarEmoji(editor, item.dataset.emoji, obtenerRango);
+        boton.classList.remove("ql-active");
+        cerrar();
+    });
 
     function posicionar() {
         const rect = boton.getBoundingClientRect();
@@ -369,112 +404,99 @@ grid.addEventListener("click", (e) => {
 }
 
 
-/* Insertar emoji en la posición del cursor */
+/* Crea una instancia completa del editor Quill en cualquier contenedor */
 
-function insertarEmoji(quill, emoji) {
-    const rango = quill.getSelection() || ultimaSeleccion || { index: quill.getLength() };
-    const indice = rango ? rango.index : quill.getLength();
-    quill.insertText(indice, emoji, "user");
-    quill.setSelection(indice + emoji.length, 0);
-    quill.focus();
-}
+function crearInstanciaQuill(contenedor, contenidoInicial) {
+    if (!contenedor || typeof Quill === "undefined") return null;
 
+    registrarFuentes();
 
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
-        const editor = document.getElementById("editor");
-
-        // Si no existe el editor, no ejecutar
-        if (!editor) return;
-
-        // Verificar librería Quill
-        if (typeof Quill === "undefined") {
-            console.error("Quill no está cargado.");
-            return;
-        }
-
-        // Evitar duplicar instancia
-        if (quill !== null) return;
-
-        // Fuentes personalizadas tipo Word
-        const Font = Quill.import("attributors/style/font");
-        Font.whitelist = [
-            "arial",
-            "verdana",
-            "trebuchet",
-            "times",
-            "georgia",
-            "garamond",
-            "courier",
-            "impact",
-            "comic"
-        ];
-        Quill.register(Font, true);
-
-        quill = new Quill("#editor", {
-            theme: "snow",
-            placeholder: "Escriba aquí la novedad oficial...",
-            modules: {
-                toolbar: {
-                    container: TOOLBAR,
-                    handlers: {
-                        undo() {
-                            quill.history.undo();
-                        },
-                        redo() {
-                            quill.history.redo();
-                        }
+    const editor = new Quill(contenedor, {
+        theme: "snow",
+        placeholder: "Escriba aquí la novedad oficial...",
+        modules: {
+            toolbar: {
+                container: TOOLBAR,
+                handlers: {
+                    undo() {
+                        editor.history.undo();
+                    },
+                    redo() {
+                        editor.history.redo();
                     }
                 }
             }
-        });
-
-        // La barra de Quill es un hermano del contenedor del editor
-        const barra = editor.parentElement
-            ? editor.parentElement.querySelector(".ql-toolbar")
-            : null;
-
-        if (barra) {
-
-            // Crear manualmente el botón de emojis (siempre visible)
-            const grupoEmoji = document.createElement("span");
-            grupoEmoji.className = "ql-formats";
-            const botonEmoji = document.createElement("button");
-            botonEmoji.type = "button";
-            botonEmoji.classList.add("ql-emoji");
-            botonEmoji.title = "Insertar emoji";
-            botonEmoji.setAttribute("aria-label", "Insertar emoji");
-            botonEmoji.textContent = "";
-            grupoEmoji.appendChild(botonEmoji);
-            barra.appendChild(grupoEmoji);
-
-            // Tooltips en español para toda la barra
-            configurarTooltips(barra);
-
-            // Conectar el selector de emojis
-            const picker = construirPicker(quill, botonEmoji);
-            botonEmoji.addEventListener("click", (e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                if (botonEmoji.classList.contains("ql-active")) {
-                    botonEmoji.classList.remove("ql-active");
-                    picker.cerrar();
-                } else {
-                    botonEmoji.classList.add("ql-active");
-                    picker.abrir();
-                }
-            });
-
-        } else {
-            console.warn("No se encontró la barra de herramientas de Quill.");
         }
+    });
 
-        // Recordar la última selección (el picker quita el foco)
-        quill.on("selection-change", (rango) => {
-            if (rango) ultimaSeleccion = rango;
-        });
-
-        console.log("Editor Quill iniciado correctamente.");
+    if (contenidoInicial !== null && contenidoInicial !== undefined
+        && String(contenidoInicial).trim() !== "") {
+        editor.clipboard.dangerouslyPasteHTML(String(contenidoInicial));
     }
-);
+
+    // La barra de Quill es un hermano del contenedor del editor
+    const barra = contenedor.parentElement
+        ? contenedor.parentElement.querySelector(".ql-toolbar")
+        : null;
+
+    let ultimoRango = null;
+    editor.on("selection-change", (rango) => {
+        if (rango) ultimoRango = rango;
+    });
+
+    if (barra) {
+
+        // Botón de emojis (creado manualmente para garantizar su presencia)
+        const grupoEmoji = document.createElement("span");
+        grupoEmoji.className = "ql-formats";
+        const botonEmoji = document.createElement("button");
+        botonEmoji.type = "button";
+        botonEmoji.classList.add("ql-emoji");
+        botonEmoji.title = "Insertar emoji";
+        botonEmoji.setAttribute("aria-label", "Insertar emoji");
+        botonEmoji.textContent = "";
+        grupoEmoji.appendChild(botonEmoji);
+        barra.appendChild(grupoEmoji);
+
+        // Tooltips en español para toda la barra
+        configurarTooltips(barra);
+
+        // Selector de emojis
+        const picker = construirPicker(editor, botonEmoji, () => ultimoRango);
+        botonEmoji.addEventListener("click", (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            if (botonEmoji.classList.contains("ql-active")) {
+                botonEmoji.classList.remove("ql-active");
+                picker.cerrar();
+            } else {
+                botonEmoji.classList.add("ql-active");
+                picker.abrir();
+            }
+        });
+    }
+
+    return editor;
+}
+
+window.crearInstanciaQuill = crearInstanciaQuill;
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const editor = document.getElementById("editor");
+
+    // Si no existe el editor (formulario), no ejecutar
+    if (!editor) return;
+
+    // Verificar librería Quill
+    if (typeof Quill === "undefined") {
+        console.error("Quill no está cargado.");
+        return;
+    }
+
+    // Evitar duplicar instancia
+    if (quill !== null) return;
+
+    quill = crearInstanciaQuill(editor, null);
+    console.log("Editor Quill iniciado correctamente.");
+});
